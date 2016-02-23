@@ -14,14 +14,16 @@ public class PlayerMovement : MonoBehaviour {
     void Awake()
     {
         pivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
+        //fireball = GameObject.FindGameObjectWithTag("Fireball").GetComponent<Rigidbody>();
+        //canvas = GameObject.FindGameObjectWithTag("CanvasOne").GetComponent<Transform>();
     }
 
     void Start ()
     {
+
         if (fireball == null)
             return;
-        fireball = GameObject.FindGameObjectWithTag("Fireball").GetComponent<Rigidbody>();
-        canvas = GameObject.FindGameObjectWithTag("CanvasOne").GetComponent<Transform>();
+        
         
 
        
@@ -67,6 +69,7 @@ public class PlayerMovement : MonoBehaviour {
             canvas.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                
                 Rigidbody bulletClone = (Rigidbody)Instantiate(fireball, transform.position, transform.rotation);
                 Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
                 print("Shoot");

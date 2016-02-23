@@ -50,20 +50,24 @@ public class MouseAimCamera : MonoBehaviour
         posX = 0;
 
 
-        //if (Input.GetKey(KeyCode.Mouse1))
-        //{
-        //    if (closeFar == true)
-        //    {
-        //        pivot.position = target.position - player.position;
-        //        closeFar = false;
-        //    }
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            if (closeFar == true)
+            {
+                pivot.position += player.forward * 1.5f;
+                closeFar = false;
+            }
 
-        //}
-        //if (closeFar == false)
-        //{
-        //    pivot.position += new Vector3(0, 0, -2);
-        //    closeFar = true;
-        //}
+        }
+        else
+        {
+            if (closeFar == false)
+            {
+                pivot.position -= player.forward * 1.5f;
+                closeFar = true;
+            }
+        }
+        
 
 
         // Vart kameran ska kolla
