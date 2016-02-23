@@ -15,6 +15,7 @@ public class MouseAimCamera : MonoBehaviour
     private float speedY = 10f;
     [SerializeField]
     private float speedX = 10f;
+    private bool closeFar = true;
 
 
     void Start()
@@ -27,15 +28,16 @@ public class MouseAimCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+      
 
     }
-    void Update(){
-
+    void Update()
+    {
+    
     }
     void LateUpdate()
     {
-
+        
         //Hämtar x och y pos för spelaren och plusas på.
         posY += Input.GetAxis("Mouse Y") * Time.deltaTime * speedY;
         posX += Input.GetAxis("Mouse X") * Time.deltaTime * speedX;
@@ -48,10 +50,28 @@ public class MouseAimCamera : MonoBehaviour
         posX = 0;
 
 
+        //if (Input.GetKey(KeyCode.Mouse1))
+        //{
+        //    if (closeFar == true)
+        //    {
+        //        pivot.position = target.position - player.position;
+        //        closeFar = false;
+        //    }
+
+        //}
+        //if (closeFar == false)
+        //{
+        //    pivot.position += new Vector3(0, 0, -2);
+        //    closeFar = true;
+        //}
+
+
         // Vart kameran ska kolla
         this.transform.LookAt(target);
         //Vad kameran följer
         this.transform.position = pivot.position;
+       
+
     }
 
 }
