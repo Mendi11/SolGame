@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
     public float mSpeed = 10;
 
 	// Use this for initialization
