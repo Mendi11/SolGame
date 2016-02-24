@@ -5,25 +5,25 @@ public class MouseAimCamera : MonoBehaviour
 {
 
     // Variablar
-    private Transform target;
-    private Transform pivot;
-    private Transform player;
-    private float rotateSpeed = 3f;
-    private float posY = 0;
-    private float posX = 0;
+    private Transform mTarget;
+    private Transform mPivot;
+    private Transform mPlayer;
+    private float mRotateSpeed = 3f;
+    private float mPosY = 0;
+    private float mPosX = 0;
     [SerializeField]
-    private float speedY = 10f;
+    private float mSpeedY = 10f;
     [SerializeField]
-    private float speedX = 10f;
-    private bool closeFar = true;
+    private float mSpeedX = 10f;
+    private bool mCloseFar = true;
 
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("CameraTarget").transform;
+        mTarget = GameObject.FindGameObjectWithTag("CameraTarget").transform;
         //transform.parent = target.transform;
-        pivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        mPivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
+        mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void FixedUpdate()
@@ -39,41 +39,41 @@ public class MouseAimCamera : MonoBehaviour
     {
         
         //Hämtar x och y pos för spelaren och plusas på.
-        posY += Input.GetAxis("Mouse Y") * Time.deltaTime * speedY;
-        posX += Input.GetAxis("Mouse X") * Time.deltaTime * speedX;
+        mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
+        mPosX += Input.GetAxis("Mouse X") * Time.deltaTime * mSpeedX;
 
         //Ändar posen på pivoten och roterar spelaren.
-        Vector3 move = new Vector3(target.position.x, posY, target.position.z);
-        target.position = move;
-        player.Rotate(Vector3.up, posX);
+        Vector3 move = new Vector3(mTarget.position.x, mPosY, mTarget.position.z);
+        mTarget.position = move;
+        mPlayer.Rotate(Vector3.up, mPosX);
         // Resetar x rotationen
-        posX = 0;
+        mPosX = 0;
 
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            if (closeFar == true)
+            if (mCloseFar == true)
             {
-                pivot.position += player.forward * 1.5f;
-                closeFar = false;
+                mPivot.position += mPlayer.forward * 1.5f;
+                mCloseFar = false;
             }
 
         }
         else
         {
-            if (closeFar == false)
+            if (mCloseFar == false)
             {
-                pivot.position -= player.forward * 1.5f;
-                closeFar = true;
+                mPivot.position -= mPlayer.forward * 1.5f;
+                mCloseFar = true;
             }
         }
         
 
 
         // Vart kameran ska kolla
-        this.transform.LookAt(target);
+        this.transform.LookAt(mTarget);
         //Vad kameran följer
-        this.transform.position = pivot.position;
+        this.transform.position = mPivot.position;
        
 
     }

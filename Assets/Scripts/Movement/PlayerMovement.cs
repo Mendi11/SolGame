@@ -2,62 +2,48 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
+
+    //Variablar
     public float mSpeed = 10;
     [SerializeField]
-    private Transform mcanvas;
+    private Transform mCanvas;
     [SerializeField]
-    private Rigidbody mfireball;
-    private Transform mpivot;
-    private Rigidbody mrgb;
-    private bool mgorund = false;
+    private Rigidbody mFireball;
+    private Transform mPivot;
+    private Transform mTarget;
+    private Rigidbody mRgb;
+    private int mGorund = 0;
    
 
     // Use this for initialization
     void Awake()
     {
-        mrgb = GetComponent<Rigidbody>();
-        mpivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
-        //fireball = GameObject.FindGameObjectWithTag("Fireball").GetComponent<Rigidbody>();
-        //canvas = GameObject.FindGameObjectWithTag("CanvasOne").GetComponent<Transform>();
+        mRgb = GetComponent<Rigidbody>();
+        mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
+        mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
+        
     }
 
     void Start ()
     {
-
-        if (mfireball == null)
-            return;
-        
-        
-
-       
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (mfireball == null)
-                    return; 
+        //if (mFireball == null)
+        //            return; 
 
     }
 
     void Update () {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = (false);
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = (true);
-        }
 
-        print(mgorund);
-
+        CursorHide();
+        print(mGorund);
     }
     void LateUpdate()
     {
-
+        // Movment.
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
@@ -74,38 +60,82 @@ public class PlayerMovement : MonoBehaviour {
         {
             transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && mgorund == true)
+        if (Input.GetKeyDown(KeyCode.Space) && mGorund > 0)
         {
-            mrgb.AddForce(Vector3.up * 200f);
+            //Hoppar upp med force.
+            mRgb.AddForce(Vector3.up * 200f);
         }
        
         if (Input.GetKey(KeyCode.Mouse1))
         {                     
-            mcanvas.gameObject.SetActive(true);
+            //Canvas ska vara ture om man håller höger mus knapp
+            mCanvas.gameObject.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Mouse0))
-            {  
-                Rigidbody bulletClone = (Rigidbody)Instantiate(mfireball, transform.position, transform.rotation);
-                Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-                print("Shoot");
+            {
+                RaycastB();
             }
         }
         else
         {
-            mcanvas.gameObject.SetActive(false); 
+            //Canvas ska vara false om man inte håller höger mus knapp
+            mCanvas.gameObject.SetActive(false); 
         }
     }
     void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.tag == "Ground")
         {
-            mgorund = true;
+            mGorund += 1;
         }        
     }
     void OnCollisionExit(Collision col)
     {
         if (col.gameObject.tag == "Ground")
         {
-            mgorund = false;
+            mGorund -= 1;
+        }
+
+    }
+    void Bullet(float speed, RaycastHit hit)
+    {
+
+        //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
+        //Skjuter mot positionen. Skapar 
+        Vector3 shootDirection = hit.point - transform.position;
+        Rigidbody bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+        bulletClone.velocity = shootDirection * speed;
+
+    }
+    void CursorHide()
+    {
+        // Gömmer eller visar musen och låser den i skärm rutan.
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = (false);
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = (true);
+        }
+
+
+    }
+    void RaycastB()
+    {
+        // Skapar en raycast som kollar vilken direction raycasten ska träffa.
+        RaycastHit hit;
+        Vector3 direction = mTarget.position - mPivot.position;
+        Ray rayLaser = new Ray(mPivot.position, direction);
+        Debug.DrawRay(mPivot.position, direction * 1000);
+        if (Physics.Raycast(rayLaser, out hit, 1000))
+        {
+            if (hit.collider.tag == "Ground")
+            {
+                Bullet(5, hit);
+            }
         }
 
     }
