@@ -3,24 +3,79 @@ using System.Collections;
 
 public class MouseAimCamera : MonoBehaviour
 {
-    public GameObject target;
-    public float rotateSpeed = 5;
 
+    // Variablar
+    private Transform target;
+    private Transform pivot;
+    private Transform player;
+    private float rotateSpeed = 3f;
+    private float posY = 0;
+    private float posX = 0;
+    [SerializeField]
+    private float speedY = 10f;
+    [SerializeField]
+    private float speedX = 10f;
+    private bool closeFar = true;
 
 
     void Start()
     {
-        transform.parent = target.transform;
-
+        target = GameObject.FindGameObjectWithTag("CameraTarget").transform;
+        //transform.parent = target.transform;
+        pivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void Update(){
+    void FixedUpdate()
+    {
+      
 
     }
-
+    void Update()
+    {
+    
+    }
     void LateUpdate()
     {
-        float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
-        target.transform.RotateAround(target.transform.position, Vector3.up, horizontal);
+        
+        //Hämtar x och y pos för spelaren och plusas på.
+        posY += Input.GetAxis("Mouse Y") * Time.deltaTime * speedY;
+        posX += Input.GetAxis("Mouse X") * Time.deltaTime * speedX;
+
+        //Ändar posen på pivoten och roterar spelaren.
+        Vector3 move = new Vector3(target.position.x, posY, target.position.z);
+        target.position = move;
+        player.Rotate(Vector3.up, posX);
+        // Resetar x rotationen
+        posX = 0;
+
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            if (closeFar == true)
+            {
+                pivot.position += player.forward * 1.5f;
+                closeFar = false;
+            }
+
+        }
+        else
+        {
+            if (closeFar == false)
+            {
+                pivot.position -= player.forward * 1.5f;
+                closeFar = true;
+            }
+        }
+        
+
+
+        // Vart kameran ska kolla
+        this.transform.LookAt(target);
+        //Vad kameran följer
+        this.transform.position = pivot.position;
+       
+
     }
+
 }
