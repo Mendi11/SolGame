@@ -3,16 +3,17 @@ using System.Collections;
 
 public class Fireball : MonoBehaviour {
 
-    Rigidbody rgb;
-    Transform target;
+    Rigidbody mrgb;
+    Transform mtarget;
+    private float mspeed = 10;
 
 	// Use this for initialization
 	void Start ()
     {
-        target = GameObject.FindGameObjectWithTag("CameraTarget").transform;
-        rgb = GetComponent<Rigidbody>();
-        Vector3 move = target.position - transform.position;
-        rgb.velocity = move * 10;
+        mtarget = GameObject.FindGameObjectWithTag("CameraTarget").transform;
+        mrgb = GetComponent<Rigidbody>();
+        Vector3 move = (mtarget.position - transform.position) + new Vector3(0,0,0);
+        mrgb.velocity = move * mspeed;
 
     }
 	
