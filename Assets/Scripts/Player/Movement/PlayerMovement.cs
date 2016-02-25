@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour {
     private Transform mTarget;
     private Rigidbody mRgb;
     private int mGorund = 0;
-   
+    Rigidbody bulletClone;
+
 
     // Use this for initialization
     void Awake()
@@ -65,8 +66,13 @@ public class PlayerMovement : MonoBehaviour {
             //Hoppar upp med force.
             mRgb.AddForce(Vector3.up * 200f);
         }
-       
-        if (Input.GetKey(KeyCode.Mouse1))
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.position = bulletClone.position;
+
+        }
+            if (Input.GetKey(KeyCode.Mouse1))
         {                     
             //Canvas ska vara ture om man håller höger mus knapp
             mCanvas.gameObject.SetActive(true);
@@ -102,7 +108,7 @@ public class PlayerMovement : MonoBehaviour {
         //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
         //Skjuter mot positionen. Skapar 
         Vector3 shootDirection = hit.point - transform.position;
-        Rigidbody bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+        bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
         Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
         bulletClone.velocity = shootDirection * speed;
 
