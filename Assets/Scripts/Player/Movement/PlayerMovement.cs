@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody mRgb;
     private int mGorund = 0;
     Rigidbody bulletClone;
+    private bool mDestroyFB = false;
+    private bool mBallE = false;
+
 
 
     // Use this for initialization
@@ -44,6 +47,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     void LateUpdate()
     {
+        
         // Movment.
         if (Input.GetKey(KeyCode.W))
         {
@@ -69,23 +73,45 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.E))
         {
+            if (bulletClone == null)
+                return;
             transform.position = bulletClone.position;
+            mDestroyFB = true;
+            mBallE = false;
 
         }
-            if (Input.GetKey(KeyCode.Mouse1))
-        {                     
-            //Canvas ska vara ture om man håller höger mus knapp
+        if (Input.GetKey(KeyCode.Mouse1))
+        {            
+            //Canvas ska vara ture om man håller högers mus knapp
             mCanvas.gameObject.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyUp(KeyCode.Mouse0))
             {
-                RaycastB();
+                mBallE = true;
+                //Vector3 shootDirection = hit.point - transform.position;
+                if (bulletClone != null)
+                { return; }
+                else
+                { 
+                    bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+                    Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+                    bulletClone.AddForce(((Vector3.forward * 100f) + (Vector3.up * 100f)) * 4);
+                   
+                }
+            }//ASD
+            if (Input.GetKeyDown(KeyCode.Mouse0) && mBallE == true)
+            {
+                mDestroyFB = true;
+                mBallE = false;
+
             }
-        }
+        }    
         else
         {
             //Canvas ska vara false om man inte håller höger mus knapp
-            mCanvas.gameObject.SetActive(false); 
+            mCanvas.gameObject.SetActive(false);
+            
         }
+        
     }
     void OnCollisionEnter(Collision col)
     {
@@ -107,10 +133,10 @@ public class PlayerMovement : MonoBehaviour {
 
         //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
         //Skjuter mot positionen. Skapar 
-        Vector3 shootDirection = hit.point - transform.position;
-        bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
-        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-        bulletClone.velocity = shootDirection * speed;
+        //Vector3 shootDirection = hit.point - transform.position;
+        //bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+        //Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+        //bulletClone.velocity = shootDirection * speed;
 
     }
     void CursorHide()
@@ -143,6 +169,15 @@ public class PlayerMovement : MonoBehaviour {
                 Bullet(5, hit);
             }
         }
+
+    }
+
+    public bool DestroyFB
+    {
+
+       get { return mDestroyFB; }
+       set { mDestroyFB = value; }
+
 
     }
 }
