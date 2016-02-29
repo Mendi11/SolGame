@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody bulletClone;
     private bool mDestroyFB = false;
     private bool mBallE = false;
+    float mPosX;
 
 
 
@@ -80,6 +81,7 @@ public class PlayerMovement : MonoBehaviour {
             mBallE = false;
 
         }
+        
         if (Input.GetKey(KeyCode.Mouse1))
         {            
             //Canvas ska vara ture om man håller högers mus knapp
@@ -91,11 +93,12 @@ public class PlayerMovement : MonoBehaviour {
                 if (bulletClone != null)
                 { return; }
                 else
-                { 
-                    bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
-                    Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-                    bulletClone.AddForce(((Vector3.forward * 100f) + (Vector3.up * 100f)) * 4);
-                   
+                {
+                    //bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+                    //Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+                    //bulletClone.AddForce(Vector3.forward + new Vector3(mPosX,0,0));
+                    RaycastB();
+
                 }
             }//ASD
             if (Input.GetKeyDown(KeyCode.Mouse0) && mBallE == true)
@@ -109,7 +112,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             //Canvas ska vara false om man inte håller höger mus knapp
             mCanvas.gameObject.SetActive(false);
-            
+            mBallE = false;
         }
         
     }
@@ -133,10 +136,10 @@ public class PlayerMovement : MonoBehaviour {
 
         //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
         //Skjuter mot positionen. Skapar 
-        //Vector3 shootDirection = hit.point - transform.position;
-        //bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
-        //Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-        //bulletClone.velocity = shootDirection * speed;
+        Vector3 shootDirection = hit.point - transform.position;
+        bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+        bulletClone.velocity = shootDirection + (Vector3.up * 3f) * speed;
 
     }
     void CursorHide()
@@ -166,7 +169,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (hit.collider.tag == "Ground")
             {
-                Bullet(5, hit);
+                Bullet(2, hit);
             }
         }
 
