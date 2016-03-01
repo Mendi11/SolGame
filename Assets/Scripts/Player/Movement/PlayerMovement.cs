@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     void OnCollisionExit(Collision col)
     {
-        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall")
+        if (col.gameObject.tag == "Ground")
         {
             mGorund -= 1;
         }
