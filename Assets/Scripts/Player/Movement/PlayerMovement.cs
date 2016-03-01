@@ -5,10 +5,15 @@ public class PlayerMovement : MonoBehaviour {
 
     //Variablar
     public float mSpeed = 10;
+
+
     [SerializeField]
     private Transform mCanvas;
     [SerializeField]
     private Rigidbody mFireball;
+    [SerializeField]
+    private Rigidbody mFireballB;
+
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
@@ -16,7 +21,9 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody bulletClone;
     private bool mDestroyFB = false;
     private bool mBallE = false;
-    float mPosX;
+    private bool[] mFireBallType = new bool[5];
+    //float mPosX;
+
 
 
 
@@ -26,11 +33,11 @@ public class PlayerMovement : MonoBehaviour {
         mRgb = GetComponent<Rigidbody>();
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
-        
     }
 
     void Start ()
     {
+       // mFireball = GameObject.FindGameObjectWithTag("FireballB").GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -71,7 +78,16 @@ public class PlayerMovement : MonoBehaviour {
             //Hoppar upp med force.
             mRgb.AddForce(Vector3.up * 200f);
         }
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            mFireBallType[0] = true;
 
+        }
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            mFireBallType[1] = true;
+
+        }
         if (Input.GetKey(KeyCode.E))
         {
             if (bulletClone == null)
@@ -124,22 +140,22 @@ public class PlayerMovement : MonoBehaviour {
     }
     void OnCollisionExit(Collision col)
     {
-        if (col.gameObject.tag == "Ground")
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall")
         {
             mGorund -= 1;
         }
 
     }
-    void Bullet(float speed, RaycastHit hit)
+    void Bullet(float speed, RaycastHit hit, Rigidbody fire)
     {
 
         //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
         //Skjuter mot positionen. Skapar 
         Vector3 shootDirection = hit.point - transform.position;
         Vector3 move = shootDirection.normalized; 
-        bulletClone = (Rigidbody)Instantiate(mFireball, transform.position, transform.rotation);
+        bulletClone = (Rigidbody)Instantiate(fire, transform.position, transform.rotation);
         Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-        bulletClone.velocity = (move * speed) + (Vector3.up * 10);
+        bulletClone.velocity = (move * speed) + (Vector3.up * 5);
 
     }
     void CursorHide()
@@ -167,20 +183,37 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawRay(mPivot.position, direction * 1000);
         if (Physics.Raycast(rayLaser, out hit, 1000))
         {
-            if (hit.collider.tag == "Ground")
+            if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall")
             {
-                Bullet(10, hit);
+                if(mFireBallType[0] == true)
+                    Bullet(15, hit,mFireball);
+                if (mFireBallType[1] == true)
+                    Bullet(15, hit, mFireballB);
+                else
+                {
+                    Bullet(15, hit, mFireball);
+                }
             }
         }
 
     }
 
+    void RestFireBall()
+    {
+        for (int i = 0; i < mFireBallType.Length; i++)
+        {
+            mFireBallType[i] = false;
+        }
+    }
+
     public bool DestroyFB
     {
-
        get { return mDestroyFB; }
        set { mDestroyFB = value; }
-
-
+    }
+    public bool[] FireBallType
+    {
+        get { return mFireBallType; }
+        set { mFireBallType = value; }
     }
 }
