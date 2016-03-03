@@ -94,39 +94,33 @@ public class PlayerMovement : MonoBehaviour {
                 return;
             transform.position = bulletClone.position;
             mDestroyFB = true;
-            mBallE = false;
 
         }
-        
+        if (Input.GetKeyDown(KeyCode.Mouse0) && mBallE == true)
+        {
+            mDestroyFB = true;
+
+        }
         if (Input.GetKey(KeyCode.Mouse1))
         {            
             //Canvas ska vara ture om man håller högers mus knapp
             mCanvas.gameObject.SetActive(true);
            
-            if (Input.GetKeyDown(KeyCode.Mouse0) && mBallE == true)
-            {
-                mDestroyFB = true;
-                mBallE = false;
-
-            }
+          
         }
-    
         else
         {
             //Canvas ska vara false om man inte håller höger mus knapp
             mCanvas.gameObject.SetActive(false);
-            mBallE = false;
+            //mBallE = false;
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            mBallE = true;
-            //Vector3 shootDirection = hit.point - transform.position;
+        {          
             if (bulletClone != null)
             { return; }
             else
             {
                 RaycastB();
-
             }
         }
 
@@ -210,6 +204,11 @@ public class PlayerMovement : MonoBehaviour {
     {
        get { return mDestroyFB; }
        set { mDestroyFB = value; }
+    }
+    public bool DestroyB
+    {
+        get { return mBallE; }
+        set { mBallE = value; }
     }
     public bool[] FireBallType
     {
