@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && mGorund > 0)
         {
             //Hoppar upp med force.
-            mRgb.AddForce(Vector3.up * 200f);
+            mRgb.AddForce(Vector3.up * 300f);
         }
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 move = shootDirection.normalized; 
         bulletClone = (Rigidbody)Instantiate(fire, transform.position, transform.rotation);
         Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-        bulletClone.velocity = (move * speed) + (Vector3.up * 5);
+        bulletClone.velocity = (move * speed) + (Vector3.up * 4);
 
     }
     void CursorHide()
@@ -183,9 +183,9 @@ public class PlayerMovement : MonoBehaviour {
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 if(mFireBallType[0] == true)
-                    Bullet(15, hit,mFireball);
+                    Bullet(7, hit,mFireball);
                 if (mFireBallType[1] == true)
-                    Bullet(15, hit, mFireballB);
+                    Bullet(7, hit, mFireballB);
                 else
                 {
                     //Bullet(15, hit, mFireball);
