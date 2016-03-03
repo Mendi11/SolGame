@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawRay(mPivot.position, direction * 1000);
         if (Physics.Raycast(rayLaser, out hit, 1000))
         {
-            if (hit.collider.tag == "Ground")
+            if (hit.collider.tag == "Ground" || hit.collider.tag == "Trigger")
             {
                 Bullet(5, hit);
             }
