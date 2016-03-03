@@ -8,8 +8,8 @@ public class FireTrigger : MonoBehaviour {
     [SerializeField]
     private int mFireBallTrigger;
     //fireBallSelect är vilke fireball de ska vara
-    // 0 = FireballRed
-    // 1 = fireballBlue
+   // 0 = FireballRed
+    // 1 = fireballBlue 
 
     // Use this for initialization
     void Start () {
