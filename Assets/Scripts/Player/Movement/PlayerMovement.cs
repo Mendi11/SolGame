@@ -105,8 +105,7 @@ public class PlayerMovement : MonoBehaviour {
         {            
             //Canvas ska vara ture om man håller högers mus knapp
             mCanvas.gameObject.SetActive(true);
-           
-          
+                   
         }
         else
         {
