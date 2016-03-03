@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Start ()
     {
+        mFireBallType[0] = true;
        // mFireball = GameObject.FindGameObjectWithTag("FireballB").GetComponent<Rigidbody>();
     }
 
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour {
     void Update () {
 
         CursorHide();
-        print(mGorund);
+        print(mBallE);
     }
     void LateUpdate()
     {
@@ -99,14 +100,16 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Mouse0) && mBallE == true)
         {
             mDestroyFB = true;
+           
 
         }
         if (Input.GetKey(KeyCode.Mouse1))
         {            
             //Canvas ska vara ture om man håller högers mus knapp
             mCanvas.gameObject.SetActive(true);
-                   
+           
         }
+
         else
         {
             //Canvas ska vara false om man inte håller höger mus knapp
@@ -114,7 +117,8 @@ public class PlayerMovement : MonoBehaviour {
             //mBallE = false;
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
-        {          
+        {
+            mBallE = true;
             if (bulletClone != null)
             { return; }
             else
@@ -176,7 +180,7 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawRay(mPivot.position, direction * 1000);
         if (Physics.Raycast(rayLaser, out hit, 1000))
         {
-            if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall")
+            if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 if(mFireBallType[0] == true)
                     Bullet(15, hit,mFireball);
@@ -184,7 +188,7 @@ public class PlayerMovement : MonoBehaviour {
                     Bullet(15, hit, mFireballB);
                 else
                 {
-                    Bullet(15, hit, mFireball);
+                    //Bullet(15, hit, mFireball);
                 }
             }
         }
