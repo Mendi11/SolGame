@@ -8,7 +8,7 @@ public class MouseAimCamera : MonoBehaviour
     private Transform mTarget;
     private Transform mPivot;
     private Transform mPlayer;
-    private float mRotateSpeed = 3f;
+    //private float mRotateSpeed = 3f;
     private float mPosY = 0;
     private float mPosX = 0;
     [SerializeField]
