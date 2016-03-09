@@ -139,14 +139,14 @@ public class PlayerMovement : MonoBehaviour {
     }
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Ground")
+        if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded += 1;
         }        
     }
     void OnCollisionExit(Collision col)
     {
-        if (col.gameObject.tag == "Ground")
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded -= 1;
         }
