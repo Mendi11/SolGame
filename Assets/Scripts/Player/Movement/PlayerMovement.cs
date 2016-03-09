@@ -4,7 +4,9 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
     //Variablar
-    public float mSpeed = 10;
+    public float mSpeed;
+    public float mJumpZ;
+
 
 
     [SerializeField]
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
-    private int mGorund = 0;
+    private int mGrounded = 0;
     Rigidbody bulletClone;
     private bool mDestroyFB = false;
     private bool mBallE = false;
@@ -56,8 +58,11 @@ public class PlayerMovement : MonoBehaviour {
     }
     void LateUpdate()
     {
+
+
         
-        // Movment.
+        // The player is able to move using the WASD keys
+      
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
@@ -74,10 +79,14 @@ public class PlayerMovement : MonoBehaviour {
         {
             transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && mGorund > 0)
+        
+
+        // The player is able to jump by pressing [Space]
+
+        if (Input.GetKeyDown(KeyCode.Space) && mGrounded > 0)
         {
             //Hoppar upp med force.
-            mRgb.AddForce(Vector3.up * 300f);
+            mRgb.AddForce(Vector3.up * mJumpZ);
         }
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -132,14 +141,14 @@ public class PlayerMovement : MonoBehaviour {
     {
         if(col.gameObject.tag == "Ground")
         {
-            mGorund += 1;
+            mGrounded += 1;
         }        
     }
     void OnCollisionExit(Collision col)
     {
         if (col.gameObject.tag == "Ground")
         {
-            mGorund -= 1;
+            mGrounded -= 1;
         }
 
     }
