@@ -4,21 +4,19 @@ using System.Collections;
 public class ActivateFireball : MonoBehaviour
 {
 
-	void Start ()
-    {
-	
-	}
-	
+    public GameObject mLight;
 
-	void Update ()
+    void Start ()
     {
+        mLight.SetActive(false);
+    }
 	
-	}
 
     void OnTriggerEnter(Collider col)
     {
         if (col.tag == "Player")
         {
+            mLight.SetActive(true);
             Destroy(this.gameObject);
         }
     }
