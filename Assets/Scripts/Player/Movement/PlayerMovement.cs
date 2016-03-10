@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    //Variablar
+    //Variables
     public float mSpeed;
     public float mJumpZ;
 

@@ -9,6 +9,7 @@ public class Checkpoint : MonoBehaviour {
     {
         if(col.tag == "Player")
         {
+            Debug.Log(mCurrentCheckpoint);
             col.GetComponent<PlayerRespawn>().RespawnPoint = transform.position;
         }
     }

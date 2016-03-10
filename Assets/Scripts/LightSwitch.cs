@@ -3,26 +3,22 @@ using System.Collections;
 
 public class LightSwitch : MonoBehaviour
 {
-    [SerializeField]
-    private Light mLight;
 
-	// Use this for initialization
-	void Start ()
+    public GameObject mLight;
+
+    // Sets the Light component to false at startup
+    void Start ()
     {
-        mLight = GetComponent<Light>();
+        mLight.SetActive(false);
     }
 	
-	// Update is called once per frame
-	void Update ()
-    {
-	    
-	}
 
+    // Sets the light component to false when colliding with Player.tag
     void OnTriggerEnter(Collider col)
     {
         if (col.tag == "Player")
         {
-            mLight.enabled = false;
+            mLight.SetActive(true);
         }
     }
 

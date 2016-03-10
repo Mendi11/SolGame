@@ -4,26 +4,25 @@ using System.Collections;
 public class PlayerRespawn : MonoBehaviour
 {
     private Vector3 mRespawnPoint;
+
+    // Initiate respawn value
     public Vector3 RespawnPoint
-    {
-        get { return mRespawnPoint; }
-        set { mRespawnPoint = value; }
-    }
+        {
+            get { return mRespawnPoint; }
+            set { mRespawnPoint = value; }
+        }
 
-	// Use this for initialization
+
+    // Sets Player checkpoint to spawn position
 	void Start ()
-    {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
+        {
+            mRespawnPoint = transform.position;
+	    }
 
+
+    // Sets Player checkpoint to mCurrentCheckpoint position
     public void Respawn()
-    {
-        transform.position = RespawnPoint;
-    }
+        {
+            transform.position = RespawnPoint;
+        }
 }
