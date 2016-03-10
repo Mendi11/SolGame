@@ -17,6 +17,13 @@ public class PlattMovement : MonoBehaviour {
     private float mEPosY = 0;
     [SerializeField]
     private float mEPosZ = 0;
+    [SerializeField]
+    private bool mOn = true;
+    [SerializeField]
+    private int mPlatID = 0;
+
+
+
     Vector3 mMove;
     Vector3 mStartPos;
     private bool mDownUp = true;
@@ -33,11 +40,12 @@ public class PlattMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (mPlattRgb.position.y >= mEPosY && mDownUp == true)
-        {
+       
+            if (mPlattRgb.position.y >= mEPosY && mDownUp == true)
+            {
             mPosY = mPosY * -1;
             mDownUp = false;
-        }
+                }
         else if (mPlattRgb.position.y <= (mStartPos.y - 0.5) && mDownUp == false)
         {
             mPosY = mPosY * -1;
@@ -64,10 +72,33 @@ public class PlattMovement : MonoBehaviour {
         {
             mPosZ = mPosZ * -1;
             mFowardBack = true;
-
         }
 
-        mMove = new Vector3(mPosX, mPosY, mPosZ);      
-        mPlattRgb.velocity = mMove;
-	}
+
+
+        if (mOn == true)
+        {
+            mMove = new Vector3(mPosX, mPosY, mPosZ);
+            mPlattRgb.velocity = mMove;
+        }
+        else if (mOn == false)
+        {
+            mMove = new Vector3(0, 0, 0);
+            mPlattRgb.velocity = mMove;
+
+        }
+    }
+
+    public bool PlattOn
+    {
+        get { return mOn; }
+        set { mOn = value; }
+
+    }
+    public int PlattID
+    {
+        get { return mPlatID; }
+        set { mPlatID = value; }
+
+    }
 }

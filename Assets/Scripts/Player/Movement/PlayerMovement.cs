@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    //Variablar
+    //Variables
     public float mSpeed;
     public float mJumpZ;
 
@@ -40,21 +40,19 @@ public class PlayerMovement : MonoBehaviour {
     void Start ()
     {
         mFireBallType[0] = true;
-       // mFireball = GameObject.FindGameObjectWithTag("FireballB").GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //if (mFireball == null)
-        //            return; 
 
     }
 
     void Update () {
 
         CursorHide();
-        print(mBallE);
+       
     }
     void LateUpdate()
     {

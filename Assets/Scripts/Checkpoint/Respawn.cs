@@ -5,11 +5,17 @@ using UnityEngine.SceneManagement;
 public class Respawn : MonoBehaviour {
     public GameObject mPlayer;
 
+    void Awake()
+    {
+        GetComponent<PlayerRespawn>();
+    }
+
     void OnTriggerEnter(Collider col)
     {
         if (col.tag == "Player")
         {
-            col.GetComponent<PlayerRespawn>().Respawn();
+            Invoke("PlayerRespawn.Respawn", 2f);
+            //col.GetComponent<PlayerRespawn>().Respawn();
         }
     }
 }
