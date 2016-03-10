@@ -67,11 +67,6 @@ public class PlattMovement : MonoBehaviour {
 
         }
 
-
-
-
-
-
         mMove = new Vector3(mPosX, mPosY, mPosZ);      
         mPlattRgb.velocity = mMove;
 	}
