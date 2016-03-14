@@ -18,9 +18,12 @@ public class PlattMovement : MonoBehaviour {
     [SerializeField]
     private float mEndPosZ = 0;
     [SerializeField]
+    private int mPlatID = 0;
+    [SerializeField]
     private bool mOn = true;
     [SerializeField]
-    private int mPlatID = 0;
+    private bool mLoop = true;
+
 
 
 
@@ -83,12 +86,20 @@ public class PlattMovement : MonoBehaviour {
             // Make the direction negetiv or positiv
             speedDir = speedDir * -1;
             dir = false;
+            if (mLoop == false)
+            {
+                mOn = false;
+            }
         }
         else if (platform <= (startPos - 0.5) && dir == false)
         {
             // Make the direction negetiv or positiv
             speedDir = speedDir * -1;
             dir = true;
+            if (mLoop == false)
+            {
+                mOn = false;
+            }
         }
         Direction(xyz,dir);
 
