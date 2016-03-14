@@ -41,11 +41,11 @@ public class PlattMovement : MonoBehaviour {
 	void Update ()
     {
        
-            if (mPlattRgb.position.y >= mEPosY && mDownUp == true)
-            {
-            mPosY = mPosY * -1;
-            mDownUp = false;
-                }
+        if (mPlattRgb.position.y >= mEPosY && mDownUp == true)
+        {
+             mPosY = mPosY * -1;
+             mDownUp = false;
+        }
         else if (mPlattRgb.position.y <= (mStartPos.y - 0.5) && mDownUp == false)
         {
             mPosY = mPosY * -1;
@@ -57,7 +57,7 @@ public class PlattMovement : MonoBehaviour {
             mPosX = mPosX * -1;
             mLeftRight = false;
         }
-        else if (mPlattRgb.position.x <= (mStartPos.y - 0.5) && mLeftRight == false)
+        else if (mPlattRgb.position.x <= (mStartPos.x - 0.5) && mLeftRight == false)
         {
             mPosX = mPosX * -1;
             mLeftRight = true;
@@ -68,7 +68,7 @@ public class PlattMovement : MonoBehaviour {
             mPosZ = mPosZ * -1;
             mFowardBack = false;
         }
-        else if (mPlattRgb.position.z <= (mStartPos.y - 0.5) && mFowardBack == false)
+        else if (mPlattRgb.position.z <= (mStartPos.z - 0.5) && mFowardBack == false)
         {
             mPosZ = mPosZ * -1;
             mFowardBack = true;
