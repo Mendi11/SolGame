@@ -19,8 +19,6 @@ public class TriggerPad : MonoBehaviour
         {
             mPlats.Add(plat.GetComponent<PlattMovement>());
         }
-        //GameObject[] mPlat = GameObject.FindGameObjectsWithTag("Platform");
-
     }
 
     // Update is called once per frame
@@ -31,18 +29,28 @@ public class TriggerPad : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
 
-        if (col.gameObject.tag == "Player")
+        foreach (PlattMovement b in mPlats)
         {
-            foreach (PlattMovement a in mPlats)
+            if (b.IsMoving == true && (b.Loop == false || b.Loop == true))
             {
-                if (a.PlattID == mPlatID && a.PlattOn == true)
+                return;
+            }
+            else
+            {
+                if (col.gameObject.tag == "Player")
                 {
-                    a.PlattOn = false;
+                    foreach (PlattMovement a in mPlats)
+                    {
+                        if (a.PlattID == mPlatID && a.PlattOn == true)
+                        {
+                            a.PlattOn = false;
 
-                }
-                else if (a.PlattID == mPlatID && a.PlattOn == false)
-                {
-                    a.PlattOn = true;
+                        }
+                        else if (a.PlattID == mPlatID && a.PlattOn == false)
+                        {
+                            a.PlattOn = true;
+                        }
+                    }
                 }
             }
         }
