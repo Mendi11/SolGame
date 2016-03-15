@@ -24,7 +24,7 @@ public class PlattMovement : MonoBehaviour {
     [SerializeField]
     private bool mLoop = true;
 
-
+    private bool mIsMoving = false;
 
 
     Vector3 mMove;
@@ -54,12 +54,14 @@ public class PlattMovement : MonoBehaviour {
             //if mOn is true.Then its should move at the direction it has.
             mMove = new Vector3(mDirSpeedX, mDirSpeedY, mDirSpeedZ);
             mPlattRgb.velocity = mMove;
+            mIsMoving = true;
         }
         else if (mOn == false)
         {
             //if mOn is false Then its should stay still.
             mMove = new Vector3(0, 0, 0);
             mPlattRgb.velocity = mMove;
+            mIsMoving = false;
 
         }
     }
@@ -123,4 +125,16 @@ public class PlattMovement : MonoBehaviour {
         }
 
     }
+
+    public bool IsMoving
+    {
+        get { return mIsMoving; }
+
+    }
+    public bool Loop
+    {
+        get { return mLoop; }
+
+    }
+
 }
