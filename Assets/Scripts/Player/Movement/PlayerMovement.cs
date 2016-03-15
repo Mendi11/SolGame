@@ -13,18 +13,20 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody mFireball;
     [SerializeField]
     private Rigidbody mFireballB;
-
+    [SerializeField]
     public Animator mAnim;
 
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
-    private int mGrounded = 0;
     Rigidbody bulletClone;
+
     private bool mDestroyFB = false;
     private bool mBallE = false;
     private bool[] mFireBallType = new bool[5];
-    //float mPosX;
+
+    private float mTransitionDuration = 0.2f;
+    private int mGrounded = 0;
 
 
 
@@ -35,8 +37,6 @@ public class PlayerMovement : MonoBehaviour {
             mRgb = GetComponent<Rigidbody>();
             mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
             mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
-
-            mAnim = GetComponent<Animator>();
         }
 
 
@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour {
         {
 
             mFireBallType[0] = true;
+            mAnim = GetComponent<Animator>();
 
         }
 
@@ -66,45 +67,82 @@ public class PlayerMovement : MonoBehaviour {
         {
 
 
-/*
-                // The player is able to move using the WASD keys (animated)
 
-            if (Input.GetKey(KeyCode.W))
+        // The player is able to move using the WASD keys (animated)
+
+        // The Vector2s X-axis is the forward momentum, the Y-axis is the rightwards momentum.
+        Vector2 velocityAdd = new Vector2(
+            (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
+            (Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
+        );
+
+        // Set animation values
+        mAnim.SetFloat("forwardSpeed", velocityAdd.x);
+        mAnim.SetFloat("rightSpeed", velocityAdd.y);
+
+
+        velocityAdd *= 0.25f;
+
+        // Move the character
+        transform.Translate(new Vector3(velocityAdd.y, 0f, velocityAdd.x));
+
+        
+            /*if (Input.GetKey(KeyCode.W))
                 {
                     transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
-
-                    mAnim.Play("standing_run_forward");
+                    //mAnim.SetBool("isRunForward", true);
+                    //mAnim.CrossFade("run_forward", mTransitionDuration, 0);
                 }
+
+                else if (Input.GetKeyUp(KeyCode.W))
+                    {
+                        mAnim.SetBool("isRunForward", false);
+                    }
 
             else if (Input.GetKey(KeyCode.S))
                 {
                     transform.Translate(Vector3.back * mSpeed * Time.deltaTime);
-
-                    mAnim.Play("standing_run_back");
+                    mAnim.SetBool("isRunBack", true);
+                    mAnim.CrossFade("run_back", mTransitionDuration, 0);
                 }
 
-            else if (Input.GetKey(KeyCode.A))
+                else if (Input.GetKeyUp(KeyCode.S))
+                    {
+                        mAnim.SetBool("isRunBack", false);
+                    }
+
+        if (Input.GetKey(KeyCode.A))
                 {
                     transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
-
-                    mAnim.Play("standing_run_left");
+                    mAnim.SetBool("isRunLeft", true);
+                    mAnim.CrossFade("run_left", mTransitionDuration, 0);
                 }
 
-            else if (Input.GetKey(KeyCode.D))
+                else if (Input.GetKeyUp(KeyCode.A))
+                    {
+                        mAnim.SetBool("isRunLeft", false);
+                    }
+
+        else if (Input.GetKey(KeyCode.D))
                 {
                     transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
-
-                    mAnim.Play("standing_run_right");
+                    mAnim.SetBool("isRunRight", true);
+                    mAnim.CrossFade("run_forward", mTransitionDuration, 0);
                 }
 
-            else
+                else if (Input.GetKeyUp(KeyCode.D))
+                    {
+                        mAnim.SetBool("isRunRight", false);
+                    }
+
+        else
                 {
-                    mAnim.CrossFade("standing_idle", 0.2f, -1);
+                    mAnim.CrossFade("idle", 0.2f, 0);
                 }
+                */
 
 
-
-*/
+/*
                 // The player is able to move using the WASD keys (non-animated)
 
             if (Input.GetKey(KeyCode.W))
@@ -129,7 +167,7 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-
+*/
 
             // The player is able to jump by pressing [Space]
 
@@ -138,6 +176,8 @@ public class PlayerMovement : MonoBehaviour {
                 //Hoppar upp med force.
 
                 mRgb.AddForce(Vector3.up * mJumpZ);
+
+                mAnim.SetTrigger("isJump");
             }
 
 
@@ -233,19 +273,25 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-
     void Bullet(float speed, RaycastHit hit, Rigidbody fire)
         {
 
-            //Raycast hittar vad den kolliderar med hämtar positionen den kolliderar med.
-            //Skjuter mot positionen. Skapar 
+                // Find projectile direction through raycast
+
             Vector3 shootDirection = hit.point - transform.position;
-            Vector3 move = shootDirection.normalized; 
-            bulletClone = (Rigidbody)Instantiate(fire, transform.position, transform.rotation);
+            Vector3 move = shootDirection.normalized;
+
+                mAnim.SetLayerWeight(1, 1);
+                mAnim.SetTrigger("isCast");
+
+        // Create projectile, and fire along planned trajectory
+
+        bulletClone = (Rigidbody)Instantiate(fire, transform.position, transform.rotation);
             Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
             bulletClone.velocity = (move * speed) + (Vector3.up * 4);
+            
 
-        }
+    }
 
 
     void CursorHide()
@@ -283,7 +329,7 @@ public class PlayerMovement : MonoBehaviour {
                 if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
                     {
                         if(mFireBallType[0] == true)
-                            Bullet(7, hit,mFireball);
+                            Bullet(7, hit, mFireball);
 
                         if (mFireBallType[1] == true)
                             Bullet(7, hit, mFireballB);
