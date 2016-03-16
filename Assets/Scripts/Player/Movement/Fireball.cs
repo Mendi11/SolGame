@@ -9,13 +9,13 @@ public class Fireball : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        
     }
 
         void Start ()
     {
-        
-        
+
+        mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         mTime = 10;
     }
 	

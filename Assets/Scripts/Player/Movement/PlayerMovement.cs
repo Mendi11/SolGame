@@ -24,12 +24,14 @@ public class PlayerMovement : MonoBehaviour {
     private bool mDestroyFB = false;
     private bool mBallE = false;
     private bool[] mFireBallType = new bool[5];
+    private bool mIsCasting = false;
 
     private float mTransitionDuration = 0.2f;
     private int mGrounded = 0;
 
 
-
+    private float mXSpeed = 0.0f;
+    private float mYSpeed = 0.0f;
 
 
     void Awake()
@@ -48,19 +50,40 @@ public class PlayerMovement : MonoBehaviour {
 
         }
 
-
     void FixedUpdate()
         {
-
-        }
+            
+    }
 
 
     void Update ()
         {
 
             CursorHide();
-       
-        }
+
+        Vector2 velocityAdd = new Vector2(
+        Input.GetAxis("Horizontal"),
+        Input.GetAxis("Vertical")
+
+    //(Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
+    //(Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
+    );
+
+        mXSpeed = Mathf.Lerp(mXSpeed, velocityAdd.x, Time.deltaTime * 10.0f);
+        mYSpeed = Mathf.Lerp(mYSpeed, velocityAdd.y, Time.deltaTime * 10.0f);
+
+        // Set animation values
+        mAnim.SetFloat("forwardSpeed", mYSpeed);
+        mAnim.SetFloat("rightSpeed", mXSpeed);
+        
+            
+
+
+        velocityAdd *= 0.25f;
+
+        // Move the character
+        transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
+    }
 
 
     void LateUpdate()
@@ -70,21 +93,8 @@ public class PlayerMovement : MonoBehaviour {
 
         //The player is able to move using the WASD keys(animated)
 
-         //The Vector2s X - axis is the forward momentum, the Y - axis is the rightwards momentum.
-        Vector2 velocityAdd = new Vector2(
-            (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
-            (Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
-        );
-
-        // Set animation values
-        mAnim.SetFloat("forwardSpeed", velocityAdd.x);
-        mAnim.SetFloat("rightSpeed", velocityAdd.y);
-
-
-        velocityAdd *= 0.25f;
-
-        // Move the character
-        transform.Translate(new Vector3(velocityAdd.y, 0f, velocityAdd.x));
+        //The Vector2s X - axis is the forward momentum, the Y - axis is the rightwards momentum.
+        
 
 
 /*
@@ -180,7 +190,7 @@ public class PlayerMovement : MonoBehaviour {
 
                 mRgb.AddForce(Vector3.up * mJumpZ);
 
-              //  mAnim.SetTrigger("isJump");
+                mAnim.SetTrigger("isJump");
             }
 
 
@@ -227,25 +237,32 @@ public class PlayerMovement : MonoBehaviour {
 
             else
                 {
-
-                    mCanvas.gameObject.SetActive(false);
+            
+            mCanvas.gameObject.SetActive(false);
 
                     //mBallE = false;
 
                 }
 
-            if (Input.GetKeyUp(KeyCode.Mouse0))
+
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
                 {
-                    mBallE = true;
+                    //mBallE = true;
+                    StartCasting();
 
-                        if (bulletClone != null)
+                    //mIsCasting = true;
+                    mAnim.SetTrigger("isCast");
+                    mAnim.SetLayerWeight(1, 1.0f);
 
-                            { return; }
+                    //if (bulletClone != null)
 
-                                else
-                                    {
-                                        RaycastB();
-                                    }
+                    //        { return; }
+
+                    //            else
+                    //                {
+                    //                    RaycastB();
+                    //                }
                 }
     }
 
@@ -373,5 +390,50 @@ public class PlayerMovement : MonoBehaviour {
         {
             get { return mFireBallType; }
             set { mFireBallType = value; }
+        }
+
+    public void StartCasting()
+    {
+
+        Debug.Log("Start casting");
+
+
+        mIsCasting = true;
+        mBallE = true;
+
+        if (bulletClone != null)
+
+        { return; }
+
+        else
+        {
+            RaycastB();
+        }
+
+    }
+
+    public void DoneCasting()
+    {
+
+        Debug.Log("Done casting");
+        StartCoroutine(FadeWeight());
+
+        mIsCasting = false;
+    }
+
+
+    public IEnumerator FadeWeight()
+        {
+            float weight = 1.0f;
+
+            while (weight > 0.0f)
+                {
+                    weight -= Time.deltaTime * 2.0f;
+                    mAnim.SetLayerWeight(1, weight);
+
+                    yield return null;
+                }
+
+            yield return null;
         }
     }
