@@ -28,15 +28,12 @@ public class TriggerPad : MonoBehaviour
     }
     void OnCollisionEnter(Collision col)
     {
-
-        foreach (PlattMovement b in mPlats)
-        {
-            if (b.IsMoving == true && (b.Loop == false || b.Loop == true))
-            {
-                return;
-            }
-            else
-            {
+            //if (b.IsMoving == true)
+            //{
+            //    return;
+            //}
+            //else if(b.IsMoving == false)
+            //{
                 if (col.gameObject.tag == "Player")
                 {
                     foreach (PlattMovement a in mPlats)
@@ -51,8 +48,6 @@ public class TriggerPad : MonoBehaviour
                             a.PlattOn = true;
                         }
                     }
-                }
-            }
-        }
+                }                  
     }
 }
