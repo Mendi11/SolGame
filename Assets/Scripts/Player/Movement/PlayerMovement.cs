@@ -69,8 +69,8 @@ public class PlayerMovement : MonoBehaviour {
     //(Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
     );
 
-        mXSpeed = Mathf.Lerp(mXSpeed, velocityAdd.x, Time.deltaTime * 10.0f);
-        mYSpeed = Mathf.Lerp(mYSpeed, velocityAdd.y, Time.deltaTime * 10.0f);
+        mXSpeed = Mathf.Lerp(mXSpeed, velocityAdd.x, Time.deltaTime * 5.0f);
+        mYSpeed = Mathf.Lerp(mYSpeed, velocityAdd.y, Time.deltaTime * 5.0f);
 
         // Set animation values
         mAnim.SetFloat("forwardSpeed", mYSpeed);
@@ -91,72 +91,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-        //The player is able to move using the WASD keys(animated)
 
-        //The Vector2s X - axis is the forward momentum, the Y - axis is the rightwards momentum.
-        
-
-
-/*
-
-        if (Input.GetKey(KeyCode.W))
-            {
-                transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
-                //mAnim.SetBool("isRunForward", true);
-                //mAnim.CrossFade("run_forward", mTransitionDuration, 0);
-            }
-
-            else if (Input.GetKeyUp(KeyCode.W))
-                {
-                    mAnim.SetBool("isRunForward", false);
-                }
-
-        else if (Input.GetKey(KeyCode.S))
-            {
-                transform.Translate(Vector3.back * mSpeed * Time.deltaTime);
-                mAnim.SetBool("isRunBack", true);
-                mAnim.CrossFade("run_back", mTransitionDuration, 0);
-            }
-
-            else if (Input.GetKeyUp(KeyCode.S))
-                {
-                    mAnim.SetBool("isRunBack", false);
-                }
-
-    if (Input.GetKey(KeyCode.A))
-            {
-                transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
-                mAnim.SetBool("isRunLeft", true);
-                mAnim.CrossFade("run_left", mTransitionDuration, 0);
-            }
-
-            else if (Input.GetKeyUp(KeyCode.A))
-                {
-                    mAnim.SetBool("isRunLeft", false);
-                }
-
-    else if (Input.GetKey(KeyCode.D))
-            {
-                transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
-                mAnim.SetBool("isRunRight", true);
-                mAnim.CrossFade("run_forward", mTransitionDuration, 0);
-            }
-
-            else if (Input.GetKeyUp(KeyCode.D))
-                {
-                    mAnim.SetBool("isRunRight", false);
-                }
-
-    else
-            {
-                mAnim.CrossFade("idle", 0.2f, 0);
-            }
-           
-*/ 
-
-
-
-        // The player is able to move using the WASD keys (non-animated)
+        // Demo character movement
 /*
         if (Input.GetKey(KeyCode.W))
         {
