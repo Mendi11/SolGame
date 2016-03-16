@@ -68,26 +68,28 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-        // The player is able to move using the WASD keys (animated)
+        //The player is able to move using the WASD keys(animated)
 
-        // The Vector2s X-axis is the forward momentum, the Y-axis is the rightwards momentum.
-        //Vector2 velocityAdd = new Vector2(
-        //    (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
-        //    (Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
-        //);
+         //The Vector2s X - axis is the forward momentum, the Y - axis is the rightwards momentum.
+        Vector2 velocityAdd = new Vector2(
+            (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
+            (Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
+        );
 
-        //// Set animation values
-        //mAnim.SetFloat("forwardSpeed", velocityAdd.x);
-        //mAnim.SetFloat("rightSpeed", velocityAdd.y);
-
-
-        //velocityAdd *= 0.25f;
-
-        //// Move the character
-        //transform.Translate(new Vector3(velocityAdd.y, 0f, velocityAdd.x));
+        // Set animation values
+        mAnim.SetFloat("forwardSpeed", velocityAdd.x);
+        mAnim.SetFloat("rightSpeed", velocityAdd.y);
 
 
-        /*if (Input.GetKey(KeyCode.W))
+        velocityAdd *= 0.25f;
+
+        // Move the character
+        transform.Translate(new Vector3(velocityAdd.y, 0f, velocityAdd.x));
+
+
+/*
+
+        if (Input.GetKey(KeyCode.W))
             {
                 transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
                 //mAnim.SetBool("isRunForward", true);
@@ -139,12 +141,13 @@ public class PlayerMovement : MonoBehaviour {
             {
                 mAnim.CrossFade("idle", 0.2f, 0);
             }
-            */
+           
+*/ 
 
 
 
         // The player is able to move using the WASD keys (non-animated)
-
+/*
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
@@ -164,7 +167,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
         }
-
+*/
 
 
 
