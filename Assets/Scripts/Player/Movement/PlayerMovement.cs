@@ -316,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
     public bool DestroyFB
     {
         get { return mDestroyFB; }
-        set { mDestroyFB = value; }
+        set { mDestroyFB = value; }//dgdgf
     }
 
     public bool DestroyB
