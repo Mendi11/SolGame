@@ -17,10 +17,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public Animator mAnim;
 
-    GameController mGameC;
-    [SerializeField]
-    private float mBallSpeed;
-
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
@@ -46,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
         mFireBallSpawn = GameObject.FindGameObjectWithTag("FireBallSpawn").GetComponent<Transform>();
-        mGameC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
 
@@ -87,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        velocityAdd *= mSpeed;
+        velocityAdd *= 0.25f;
 
         // Move the character
         transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
@@ -181,28 +176,32 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-            if (mCanvas == null)
-            {
-                return;
-                    }
+
             mCanvas.gameObject.SetActive(false);
 
             //mBallE = false;
 
         }
 
-        // print(mGameC.BallActive);
-        print(mBallE);
-        if (mGameC.BallActive == true)
+
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
         {
+            //mBallE = true;
+            StartCasting();
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
-            {
+            //mIsCasting = true;
+            mAnim.SetTrigger("isCast");
+            mAnim.SetLayerWeight(1, 1.0f);
 
-                StartCasting();
-                mAnim.SetTrigger("isCast");
-                mAnim.SetLayerWeight(1, 1.0f);
-            }
+            //if (bulletClone != null)
+
+            //        { return; }
+
+            //            else
+            //                {
+            //                    RaycastB();
+            //                }
         }
     }
 
@@ -218,10 +217,6 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded += 1;
-        }
-        if (col.gameObject.tag == "Powerup")
-        { 
-            mGameC.BallActive = true;
         }
     }
 
@@ -293,10 +288,10 @@ public class PlayerMovement : MonoBehaviour
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 if (mFireBallType[0] == true)
-                    Bullet(mBallSpeed, hit, mFireball);
+                    Bullet(7, hit, mFireball);
 
                 if (mFireBallType[1] == true)
-                    Bullet(mBallSpeed, hit, mFireballB);
+                    Bullet(7, hit, mFireballB);
 
                 else
                 {
@@ -338,12 +333,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartCasting()
     {
-        mBallE = true;
+
         Debug.Log("Start casting");
 
 
         mIsCasting = true;
-        
+        mBallE = true;
 
         if (bulletClone != null)
 
@@ -361,7 +356,7 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("Done casting");
         StartCoroutine(FadeWeight());
-        mBallE = false;
+
         mIsCasting = false;
     }
 
