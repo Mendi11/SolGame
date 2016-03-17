@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 	
 	}
 
-    bool BallActive
+    public bool BallActive
     {
         get { return mBallActive; }
         set { mBallActive = value; }

@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public Animator mAnim;
 
+    GameController mGameC;
+
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
         mFireBallSpawn = GameObject.FindGameObjectWithTag("FireBallSpawn").GetComponent<Transform>();
+        mGameC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
 
@@ -176,32 +179,27 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-
+            if (mCanvas == null)
+            {
+                return;
+                    }
             mCanvas.gameObject.SetActive(false);
 
             //mBallE = false;
 
         }
 
-
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
+        print(mGameC.BallActive);
+        if (mGameC.BallActive == true)
         {
-            //mBallE = true;
-            StartCasting();
 
-            //mIsCasting = true;
-            mAnim.SetTrigger("isCast");
-            mAnim.SetLayerWeight(1, 1.0f);
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
+            {
 
-            //if (bulletClone != null)
-
-            //        { return; }
-
-            //            else
-            //                {
-            //                    RaycastB();
-            //                }
+                StartCasting();
+                mAnim.SetTrigger("isCast");
+                mAnim.SetLayerWeight(1, 1.0f);
+            }
         }
     }
 
@@ -217,6 +215,10 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded += 1;
+        }
+        if (col.gameObject.tag == "Powerup")
+        { 
+            mGameC.BallActive = true;
         }
     }
 
@@ -288,10 +290,10 @@ public class PlayerMovement : MonoBehaviour
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 if (mFireBallType[0] == true)
-                    Bullet(7, hit, mFireball);
+                    Bullet(30, hit, mFireball);
 
                 if (mFireBallType[1] == true)
-                    Bullet(7, hit, mFireballB);
+                    Bullet(30, hit, mFireballB);
 
                 else
                 {
