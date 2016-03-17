@@ -25,7 +25,7 @@ public class Fireball : MonoBehaviour {
         mTime -= Time.deltaTime;
         if (mPlayer.DestroyFB == true)
         {
-            mPlayer.DestroyB = false;
+           // mPlayer.DestroyB = false;
             Destroy(gameObject);
             mPlayer.DestroyFB = false;
             

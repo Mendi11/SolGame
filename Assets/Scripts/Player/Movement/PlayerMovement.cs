@@ -191,7 +191,8 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        print(mGameC.BallActive);
+        // print(mGameC.BallActive);
+        print(mBallE);
         if (mGameC.BallActive == true)
         {
 
@@ -320,7 +321,7 @@ public class PlayerMovement : MonoBehaviour
     public bool DestroyFB
     {
         get { return mDestroyFB; }
-        set { mDestroyFB = value; }//dgdgf
+        set { mDestroyFB = value; }
     }
 
     public bool DestroyB
@@ -337,12 +338,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartCasting()
     {
-
+        mBallE = true;
         Debug.Log("Start casting");
 
 
         mIsCasting = true;
-        mBallE = true;
+        
 
         if (bulletClone != null)
 
@@ -360,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("Done casting");
         StartCoroutine(FadeWeight());
-
+        mBallE = false;
         mIsCasting = false;
     }
 
