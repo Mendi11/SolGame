@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour {
 
     //Variables
     public float mSpeed;
-    public float mJumpZ;
+    public float mJumpZ = 10f;
 
     [SerializeField]
     private Transform mCanvas;
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     private Transform mTarget;
     private Rigidbody mRgb;
     Rigidbody bulletClone;
+    Transform mFireBallSpawn;
 
     private bool mDestroyFB = false;
     private bool mBallE = false;
@@ -38,7 +39,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             mRgb = GetComponent<Rigidbody>();
             mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
-            mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
+        mFireBallSpawn = GameObject.FindGameObjectWithTag("FireBallSpawn").GetComponent<Transform>();
+        mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
         }
 
 
@@ -126,6 +128,7 @@ public class PlayerMovement : MonoBehaviour {
 
                 mRgb.AddForce(Vector3.up * mJumpZ);
 
+            
                 mAnim.SetTrigger("isJump");
             }
 
@@ -186,9 +189,9 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     //mBallE = true;
                     StartCasting();
-
-                    //mIsCasting = true;
-                    mAnim.SetTrigger("isCast");
+            print("Shoot");
+            //mIsCasting = true;
+            mAnim.SetTrigger("isCast");
                     mAnim.SetLayerWeight(1, 1.0f);
 
                     //if (bulletClone != null)
