@@ -7,6 +7,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     static GameController mInstance = null;
+    [SerializeField]
     private bool mBallActive = false;
     // Use this for initialization
     void Awake()

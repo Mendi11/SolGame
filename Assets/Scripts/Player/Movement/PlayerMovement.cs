@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator mAnim;
 
     GameController mGameC;
+    [SerializeField]
+    private float mBallSpeed;
 
     private Transform mPivot;
     private Transform mTarget;
@@ -85,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        velocityAdd *= 0.25f;
+        velocityAdd *= mSpeed;
 
         // Move the character
         transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
@@ -290,10 +292,10 @@ public class PlayerMovement : MonoBehaviour
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 if (mFireBallType[0] == true)
-                    Bullet(30, hit, mFireball);
+                    Bullet(mBallSpeed, hit, mFireball);
 
                 if (mFireBallType[1] == true)
-                    Bullet(30, hit, mFireballB);
+                    Bullet(mBallSpeed, hit, mFireballB);
 
                 else
                 {
