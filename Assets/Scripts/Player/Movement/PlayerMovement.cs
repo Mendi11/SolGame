@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour {
             
 
 
-        velocityAdd *= 0.25f;
+        velocityAdd *= 0.15f;
 
         // Move the character
         transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
