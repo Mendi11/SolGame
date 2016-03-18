@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Variables
     public float mSpeed;
-    public float mJumpZ;
+    public float mJump;
 
     [SerializeField]
     private Transform mCanvas;
@@ -98,41 +98,13 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-
-
-        // Demo character movement
-        /*
-                if (Input.GetKey(KeyCode.W))
-                {
-                    transform.Translate(Vector3.forward * mSpeed * Time.deltaTime);
-                }
-
-                if (Input.GetKey(KeyCode.S))
-                {
-                    transform.Translate(Vector3.back * mSpeed * Time.deltaTime);
-                }
-
-                if (Input.GetKey(KeyCode.A))
-                {
-                    transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
-                }
-
-                if (Input.GetKey(KeyCode.D))
-                {
-                    transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
-                }
-        */
-
-
-
-
         // The player is able to jump by pressing [Space]
 
         if (Input.GetKeyDown(KeyCode.Space) && mGrounded > 0)
         {
             //Hoppar upp med force.
 
-            mRgb.AddForce(Vector3.up * mJumpZ);
+            mRgb.AddForce(Vector3.up * mJump);
 
             mAnim.SetTrigger("isJump");
         }
@@ -192,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // print(mGameC.BallActive);
-        print(mBallE);
+        //print(mBallE);
         if (mGameC.BallActive == true)
         {
 
@@ -356,7 +328,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void DoneCasting()//AdsD
+    public void DoneCasting()
     {
 
         Debug.Log("Done casting");
