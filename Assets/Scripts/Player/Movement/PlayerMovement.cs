@@ -356,7 +356,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void DoneCasting()
+    public void DoneCasting()//AdsD
     {
 
         Debug.Log("Done casting");
