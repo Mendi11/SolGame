@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void FixedUpdate()//LOL
+    void FixedUpdate()//LOLasd
     {
 
     }
