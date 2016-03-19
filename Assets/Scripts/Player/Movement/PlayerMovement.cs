@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        print(mGrounded);
         CursorHide();
 
         Vector2 velocityAdd = new Vector2(
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate()
     {
-
+        
 
         // The player is able to jump by pressing [Space]
 
@@ -190,10 +190,12 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded += 1;
+            
         }
         if (col.gameObject.tag == "Powerup")
         { 
             mGameC.BallActive = true;
+           
         }
     }
 
@@ -202,6 +204,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded -= 1;
+            
         }
 
     }
