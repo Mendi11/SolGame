@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Fireball : MonoBehaviour {
 
-    PlayerMovement mPlayer;
+    AbilityCast mPlayer;
     float mTime;
 
     // Use this for initialization
@@ -15,7 +15,7 @@ public class Fireball : MonoBehaviour {
         void Start ()
     {
 
-        mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityCast>();
         mTime = 10;
     }
 	

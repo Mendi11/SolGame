@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     private bool[] mFireBallType = new bool[5];
     private bool mIsCasting = false;
 
-    private float mTransitionDuration = 0.2f;
     private int mGrounded = 0;
 
 
@@ -58,11 +57,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void FixedUpdate()//LOLasd
-    {
-
-    }
-
 
     void Update()
     {
@@ -71,11 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 velocityAdd = new Vector2(
         Input.GetAxis("Horizontal"),
-        Input.GetAxis("Vertical")
-
-    //(Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f),
-    //(Input.GetKey(KeyCode.D) ? 1f : 0f) + (Input.GetKey(KeyCode.A) ? -1f : 0f)
-    );
+        Input.GetAxis("Vertical"));
 
         mXSpeed = Mathf.Lerp(mXSpeed, velocityAdd.x, Time.deltaTime * 5.0f);
         mYSpeed = Mathf.Lerp(mYSpeed, velocityAdd.y, Time.deltaTime * 5.0f);
@@ -98,8 +88,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
 
-        // The player is able to jump by pressing [Space]
-
+            // The player is able to jump by pressing [Space]
         if (Input.GetKeyDown(KeyCode.Space) && mGrounded > 0)
         {
             //Hoppar upp med force.
@@ -111,8 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        // Switch between fireball colors
-
+            // Switch between fireball colors
         if (Input.GetKey(KeyCode.Alpha1))
         {
             mFireBallType[0] = true;
@@ -125,8 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        // If E is pressed, teleport player to current fireball
-
+            // If E is pressed, teleport player to current fireball
         if (Input.GetKey(KeyCode.E))
         {
             if (bulletClone == null)
@@ -143,8 +130,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        // Activates/deactivates aim overlay by holding Mouse 2
-
+            // Activates/deactivates aim overlay by holding Mouse 2
         if (Input.GetKey(KeyCode.Mouse1))
         {
 
@@ -158,13 +144,8 @@ public class PlayerMovement : MonoBehaviour
                 return;
                     }
             mCanvas.gameObject.SetActive(false);
-
-            //mBallE = false;
-
         }
 
-        // print(mGameC.BallActive);
-        //print(mBallE);
         if (mGameC.BallActive == true)
         {
 
@@ -191,10 +172,6 @@ public class PlayerMovement : MonoBehaviour
         {
             mGrounded += 1;
         }
-        if (col.gameObject.tag == "Powerup")
-        { 
-            mGameC.BallActive = true;
-        }
     }
 
     void OnCollisionExit(Collision col)
@@ -217,8 +194,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 shootDirection = hit.point - mFireBallSpawn.transform.position;
         Vector3 move = shootDirection.normalized;
 
-        //mAnim.SetLayerWeight(1, 1);
-        //mAnim.SetTrigger("isCast");
 
         // Create projectile, and fire along planned trajectory
 
