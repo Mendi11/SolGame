@@ -134,13 +134,14 @@ public class AbilityCast : MonoBehaviour
     void RaycastB()
     {
         // Skapar en raycast som kollar vilken direction raycasten ska träffa.
-
+        int layerMask = 1 << 9;
+        layerMask = ~layerMask;
         RaycastHit hit;
         Vector3 direction = mTarget.position - mPivot.position;
         Ray rayLaser = new Ray(mPivot.position, direction);
         Debug.DrawRay(mPivot.position, direction * 10000);
 
-        if (Physics.Raycast(rayLaser, out hit, 10000))
+        if (Physics.Raycast(rayLaser, out hit, 10000, layerMask))
         {
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
