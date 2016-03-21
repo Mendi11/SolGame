@@ -10,22 +10,19 @@ public class AbilityCast : MonoBehaviour
     [SerializeField]
     private Rigidbody mFireball;
     [SerializeField]
-    private Rigidbody mFireballB;
-    [SerializeField]
     public Animator mAnim;
-
     [SerializeField]
     private float mBallSpeed;
 
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
-    Rigidbody bulletClone;
+    private Rigidbody mBulletClone;
     Transform mFireBallSpawn;
 
     private bool mDestroyFB = false;
     private bool mBallE = false;
-    private bool[] mFireBallType = new bool[5];
+   // private bool[] mFireBallType = new bool[5];
     private bool mIsCasting = false;
     private bool mFinishedCast = true;
 
@@ -41,51 +38,62 @@ public class AbilityCast : MonoBehaviour
 
     void Start()
     {
-        mFireBallType[0] = true;
+        //mFireBallType[0] = true;
         mAnim = GetComponent<Animator>();
     }
 
 
     
+    void Update()
+    {
+        print(mBallE);
 
+    }
 
     void LateUpdate()
     {
-
-        // Switch between fireball colors
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            mFireBallType[0] = true;
-        }
-
-        if (Input.GetKey(KeyCode.Alpha2))
-        {
-            mFireBallType[1] = true;
-        }
 
 
 
         // Fires a projectile by pressing Mouse 1
         if (mGameC.BallActive == true)
         {
-
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting && mFinishedCast)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-
+               
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse0) )
+            {
+                mDestroyFB = true;
+                if (mBulletClone != null)
+                { return; }
+                else
+                {
+                    mDestroyFB = false;
+                    RaycastB();
+                }
                 StartCasting();
                 mAnim.SetTrigger("isCast");
                 mAnim.SetLayerWeight(1, 1.0f);
 
-                mDestroyFB = true;
+                
                 mFinishedCast = false;
             }
+        }
+      
+        if (Input.GetKey(KeyCode.E))
+        {
+            if (mBulletClone == null)
+                return;
+
+            transform.position = mBulletClone.position;
+            mDestroyFB = true;
         }
 
         // Activates/deactivates aim overlay by holding Mouse 2
         if (Input.GetKey(KeyCode.Mouse1))
         {
-
-            mCanvas.gameObject.SetActive(true);
+            mCanvas.gameObject.SetActive(true);            
         }
 
         else
@@ -98,14 +106,7 @@ public class AbilityCast : MonoBehaviour
         }
 
         // If E is pressed, teleport player to current fireball
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (bulletClone == null)
-                return;
-
-            transform.position = bulletClone.position;
-            mDestroyFB = true;
-        }
+      
     }
 
 
@@ -122,9 +123,9 @@ public class AbilityCast : MonoBehaviour
 
         // Create projectile, and fire along planned trajectory
 
-        bulletClone = (Rigidbody)Instantiate(fire, mFireBallSpawn.transform.position, mFireBallSpawn.transform.rotation);
-        Physics.IgnoreCollision(bulletClone.GetComponent<Collider>(), GetComponent<Collider>());
-        bulletClone.velocity = (move * speed) + (Vector3.up * 4);
+        mBulletClone = (Rigidbody)Instantiate(fire, mFireBallSpawn.transform.position, mFireBallSpawn.transform.rotation);
+        Physics.IgnoreCollision(mBulletClone.GetComponent<Collider>(), GetComponent<Collider>());
+        mBulletClone.velocity = (move * speed) + (Vector3.up * 4);
 
 
     }
@@ -132,8 +133,6 @@ public class AbilityCast : MonoBehaviour
 
     void RaycastB()
     {
-
-
         // Skapar en raycast som kollar vilken direction raycasten ska träffa.
 
         RaycastHit hit;
@@ -145,11 +144,7 @@ public class AbilityCast : MonoBehaviour
         {
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
-                if (mFireBallType[0] == true)
                     Bullet(mBallSpeed, hit, mFireball);
-
-                if (mFireBallType[1] == true)
-                    Bullet(mBallSpeed, hit, mFireballB);
             }
         }
 
@@ -160,26 +155,19 @@ public class AbilityCast : MonoBehaviour
     // Cast cycle
     public void StartCasting()
     {
-        mBallE = true;
+       // mBallE = true;
 
         mIsCasting = true;
 
 
-        if (bulletClone != null)
-
-        { return; }
-
-        else
-        {
-            RaycastB();
-        }
+        
 
     }
 
     public void DoneCasting()
     {
         StartCoroutine(FadeWeight());
-        mBallE = false;
+        //mBallE = false;
         mIsCasting = false;
         mFinishedCast = true;
     }
@@ -201,13 +189,13 @@ public class AbilityCast : MonoBehaviour
     }
 
     // Fireball utility
-    void RestFireBall()
-    {
-        for (int i = 0; i < mFireBallType.Length; i++)
-        {
-            mFireBallType[i] = false;
-        }
-    }
+    //void RestFireBall()
+    //{
+    //    for (int i = 0; i < mFireBallType.Length; i++)
+    //    {
+    //        mFireBallType[i] = false;
+    //    }
+    //}
 
     public bool DestroyFB
     {
@@ -221,9 +209,9 @@ public class AbilityCast : MonoBehaviour
         set { mBallE = value; }
     }
 
-    public bool[] FireBallType
-    {
-        get { return mFireBallType; }
-        set { mFireBallType = value; }
-    }
+    //public bool[] FireBallType
+    //{
+    //    get { return mFireBallType; }
+    //    set { mFireBallType = value; }
+    //}
 }
