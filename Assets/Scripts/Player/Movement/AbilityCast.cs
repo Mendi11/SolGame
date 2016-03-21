@@ -19,10 +19,11 @@ public class AbilityCast : MonoBehaviour
     private Rigidbody mRgb;
     private Rigidbody mBulletClone;
     Transform mFireBallSpawn;
+    int mGrounded = 0;
 
     private bool mDestroyFB = false;
     private bool mBallE = false;
-   // private bool[] mFireBallType = new bool[5];
+    // private bool[] mFireBallType = new bool[5];
     private bool mIsCasting = false;
     private bool mFinishedCast = true;
 
@@ -43,10 +44,9 @@ public class AbilityCast : MonoBehaviour
     }
 
 
-    
+
     void Update()
     {
-        print(mBallE);
 
     }
 
@@ -58,11 +58,8 @@ public class AbilityCast : MonoBehaviour
         // Fires a projectile by pressing Mouse 1
         if (mGameC.BallActive == true)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-               
-            }
-            if (Input.GetKeyDown(KeyCode.Mouse0) )
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && mGrounded > 0)
             {
                 mDestroyFB = true;
                 if (mBulletClone != null)
@@ -76,11 +73,11 @@ public class AbilityCast : MonoBehaviour
                 mAnim.SetTrigger("isCast");
                 mAnim.SetLayerWeight(1, 1.0f);
 
-                
+
                 mFinishedCast = false;
             }
         }
-      
+
         if (Input.GetKey(KeyCode.E))
         {
             if (mBulletClone == null)
@@ -93,7 +90,7 @@ public class AbilityCast : MonoBehaviour
         // Activates/deactivates aim overlay by holding Mouse 2
         if (Input.GetKey(KeyCode.Mouse1))
         {
-            mCanvas.gameObject.SetActive(true);            
+            mCanvas.gameObject.SetActive(true);
         }
 
         else
@@ -106,7 +103,7 @@ public class AbilityCast : MonoBehaviour
         }
 
         // If E is pressed, teleport player to current fireball
-      
+
     }
 
 
@@ -145,8 +142,26 @@ public class AbilityCast : MonoBehaviour
         {
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
-                    Bullet(mBallSpeed, hit, mFireball);
+                Bullet(mBallSpeed, hit, mFireball);
             }
+        }
+
+    }
+
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
+        {
+            mGrounded += 1;
+        }
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
+        {
+            mGrounded -= 1;
         }
 
     }
@@ -156,12 +171,12 @@ public class AbilityCast : MonoBehaviour
     // Cast cycle
     public void StartCasting()
     {
-       // mBallE = true;
+        // mBallE = true;
 
         mIsCasting = true;
 
 
-        
+
 
     }
 
