@@ -28,16 +28,16 @@ public class MouseAimCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-      
+
 
     }
     void Update()
     {
-    
+
     }
     void LateUpdate()
     {
-        
+
         //Hämtar x och y pos för spelaren och plusas på.
         mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
         mPosX += Input.GetAxis("Mouse X") * Time.deltaTime * mSpeedX;
@@ -50,31 +50,26 @@ public class MouseAimCamera : MonoBehaviour
         mPosX = 0;
 
 
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            if (mCloseFar == true)
-            {
+        if (Input.GetKey(KeyCode.Mouse1) && mCloseFar == true)
+        {         
                 mPivot.position += mPlayer.forward * 1.5f;
-                mCloseFar = false;
-            }
+                mCloseFar = false;   
 
         }
-        else
-        {
-            if (mCloseFar == false)
-            {
+        else if (mCloseFar == false)
+        {                 
                 mPivot.position -= mPlayer.forward * 1.5f;
                 mCloseFar = true;
-            }
+            
         }
-        
+
 
 
         // Vart kameran ska kolla
         this.transform.LookAt(mTarget);
         //Vad kameran följer
         this.transform.position = mPivot.position;
-       
+
 
     }
 
