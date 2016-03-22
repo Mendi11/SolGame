@@ -59,7 +59,7 @@ public class AbilityCast : MonoBehaviour
         if (mGameC.BallActive == true)
         {
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && mGrounded > 0)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 mDestroyFB = true;
                 if (mBulletClone != null)
@@ -69,12 +69,13 @@ public class AbilityCast : MonoBehaviour
                     mDestroyFB = false;
                     RaycastB();
                 }
+
+                mFinishedCast = false;
+
                 StartCasting();
                 mAnim.SetTrigger("isCast");
                 mAnim.SetLayerWeight(1, 1.0f);
 
-
-                mFinishedCast = false;
             }
         }
 
@@ -85,6 +86,9 @@ public class AbilityCast : MonoBehaviour
 
             transform.position = mBulletClone.position;
             mDestroyFB = true;
+
+            mFinishedCast = true;
+            
         }
 
         // Activates/deactivates aim overlay by holding Mouse 2
@@ -182,6 +186,7 @@ public class AbilityCast : MonoBehaviour
 
     public void DoneCasting()
     {
+        print(mFinishedCast);
         StartCoroutine(FadeWeight());
         //mBallE = false;
         mIsCasting = false;
