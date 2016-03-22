@@ -56,7 +56,7 @@ public class AbilityCast : MonoBehaviour
 
 
         // Fires a projectile by pressing Mouse 1
-        if (mGameC.BallActive == true)
+        if (mGameC.BallActive == true && mFinishedCast == true)
         {
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -87,7 +87,6 @@ public class AbilityCast : MonoBehaviour
             transform.position = mBulletClone.position;
             mDestroyFB = true;
 
-            mFinishedCast = true;
             
         }
 
