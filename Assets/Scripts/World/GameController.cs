@@ -33,6 +33,14 @@ public class GameController : MonoBehaviour {
     void Update()
     {
         CursorHide();
+
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+
+        }
     }
 
 
