@@ -129,7 +129,6 @@ public class PlattMovement : MonoBehaviour {
     public bool IsMoving
     {
         get { return mIsMoving; }
-
     }
     public bool Loop
     {

@@ -183,7 +183,7 @@ public class AbilityCast : MonoBehaviour
 
     public void DoneCasting()
     {
-        print(mFinishedCast);
+        //print(mFinishedCast);
         StartCoroutine(FadeWeight());
         //mBallE = false;
         mIsCasting = false;
