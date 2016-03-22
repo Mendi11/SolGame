@@ -34,7 +34,13 @@ public class Fireball : MonoBehaviour {
         {
             mPlayer.DestroyB = false;
             Destroy(gameObject);          
-        }               
-                 
+        }                          
 	}
+
+    void OnCollisionEnter()
+    {
+            Destroy(gameObject);
+            mPlayer.DestroyFB = false;
+            mPlayer.mFinishedCast = true;
+    }
 }

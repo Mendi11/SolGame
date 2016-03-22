@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour {
         private float mYSpeed;
 
         private int mGrounded = 0;                      // if on the ground
-        //public float mGroundCheckDistance;
         public float mGravityMultiplier;
         public float mJumpHeight;                       // Jump height               
 
@@ -51,7 +50,7 @@ public class Movement : MonoBehaviour {
         // Move the character
         transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
 
-
+        // Jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Vector3 rayOrigin = GetComponent<Collider>().bounds.center;
@@ -64,7 +63,6 @@ public class Movement : MonoBehaviour {
             {
                 if (hitInfo.collider.tag == "Ground" || hitInfo.collider.tag == "Platform")
                 {
-                    //Debug.Log(mCalculateJump);
                     mCalculateJump = true;
                 }
             }
@@ -88,6 +86,23 @@ public class Movement : MonoBehaviour {
         {
             HandleAirborneMovement();
         }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
+        {
+            mGrounded += 1;
+        }
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
+        {
+            mGrounded -= 1;
+        }
+
     }
 
     void HandleAirborneMovement()

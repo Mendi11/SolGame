@@ -5,14 +5,10 @@ public class AbilityCast : MonoBehaviour
 {
     GameController mGameC;
 
-    [SerializeField]
-    private Transform mCanvas;
-    [SerializeField]
-    private Rigidbody mFireball;
-    [SerializeField]
-    public Animator mAnim;
-    [SerializeField]
-    private float mBallSpeed;
+    [SerializeField] private Transform mCanvas;
+    [SerializeField] private Rigidbody mFireball;
+    [SerializeField] public Animator mAnim;
+    [SerializeField] private float mBallSpeed;
 
     private Transform mPivot;
     private Transform mTarget;
@@ -24,7 +20,7 @@ public class AbilityCast : MonoBehaviour
     private bool mDestroyFB = false;
     private bool mBallE = false;
     private bool mIsCasting = false;
-    private bool mFinishedCast = true;
+    [SerializeField] public bool mFinishedCast = true;
 
 
     void Awake()
@@ -103,8 +99,6 @@ public class AbilityCast : MonoBehaviour
             }
             mCanvas.gameObject.SetActive(false);
         }
-
-        
     }
 
 
@@ -150,35 +144,12 @@ public class AbilityCast : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
-        {
-            mGrounded += 1;
-        }
-    }
-
-    void OnCollisionExit(Collision col)
-    {
-        if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
-        {
-            mGrounded -= 1;
-        }
-
-    }
-
-
-
     // Cast cycle
     public void StartCasting()
     {
         // mBallE = true;
 
         mIsCasting = true;
-
-
-
-
     }
 
     public void DoneCasting()
