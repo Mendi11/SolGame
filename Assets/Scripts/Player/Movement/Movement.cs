@@ -62,9 +62,9 @@ public class Movement : MonoBehaviour {
 
             if (Physics.Raycast(rayOrigin, Vector3.down, out hitInfo, rayDistance) && !mCalculateJump)
             {
-                if (hitInfo.collider.tag == "Ground")
+                if (hitInfo.collider.tag == "Ground" || hitInfo.collider.tag == "Platform")
                 {
-                    Debug.Log(mCalculateJump);
+                    //Debug.Log(mCalculateJump);
                     mCalculateJump = true;
                 }
             }

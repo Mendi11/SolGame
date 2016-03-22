@@ -14,7 +14,6 @@ public class TriggerPad : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         lt = GetComponent<Light>();
         lt.color = Color.blue;
         mPlats = new List<PlattMovement>();
@@ -22,6 +21,7 @@ public class TriggerPad : MonoBehaviour
         foreach (GameObject plat in platforms)
         {
             mPlats.Add(plat.GetComponent<PlattMovement>());
+            print("1");
         }
     }
 
@@ -29,40 +29,27 @@ public class TriggerPad : MonoBehaviour
     void Update()
     {
 
+
     }
     void OnCollisionEnter(Collision col)
     {
-            //if (b.IsMoving == true)
-            //{
-            //    return;
-            //}
-            //else if(b.IsMoving == false)
-            //{
-                if (col.gameObject.tag == "Player")
-                {
 
-                    if (lt.color == Color.blue)
-                    {
-                        lt.color = Color.green;
-                    }
-                    else if (lt.color == Color.green)
-                    {
-                        lt.color = Color.blue;
-                    }
+        if (col.gameObject.tag == "Player")
+        {
+
+            if (lt.color == Color.blue)
+            {
+                lt.color = Color.green;
+            }
+
 
             foreach (PlattMovement a in mPlats)
-                    {
-                        if (a.PlattID == mPlatID && a.PlattOn == true)
-                        {
-                            a.PlattOn = false;
-                            
-
-                        }
-                        else if (a.PlattID == mPlatID && a.PlattOn == false)
-                        {
-                            a.PlattOn = true;
-                        }
-                    }
-                }                  
+            {
+                if (a.PlattID == mPlatID && a.PlattOn == false)
+                {
+                    a.PlattOn = true;
+                }
+            }
+        }
     }
 }
