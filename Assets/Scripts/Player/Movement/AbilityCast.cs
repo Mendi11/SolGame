@@ -23,7 +23,6 @@ public class AbilityCast : MonoBehaviour
 
     private bool mDestroyFB = false;
     private bool mBallE = false;
-    // private bool[] mFireBallType = new bool[5];
     private bool mIsCasting = false;
     private bool mFinishedCast = true;
 
@@ -39,7 +38,6 @@ public class AbilityCast : MonoBehaviour
 
     void Start()
     {
-        //mFireBallType[0] = true;
         mAnim = GetComponent<Animator>();
     }
 
@@ -79,6 +77,7 @@ public class AbilityCast : MonoBehaviour
             }
         }
 
+        // If E is pressed, teleport player to current fireball
         if (Input.GetKey(KeyCode.E))
         {
             if (mBulletClone == null)
@@ -105,8 +104,7 @@ public class AbilityCast : MonoBehaviour
             mCanvas.gameObject.SetActive(false);
         }
 
-        // If E is pressed, teleport player to current fireball
-
+        
     }
 
 
