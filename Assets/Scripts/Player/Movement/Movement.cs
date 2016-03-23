@@ -29,8 +29,14 @@ public class Movement : MonoBehaviour {
         mRgb = GetComponent<Rigidbody>();
         mCalculateJump = false;
     }
+    void Start()
+    {
+        transform.rotation.Set(0,0,0,0);
+        
 
-    void LateUpdate()
+    }
+
+        void LateUpdate()
     {
 
 
