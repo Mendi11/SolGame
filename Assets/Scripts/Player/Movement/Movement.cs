@@ -29,17 +29,14 @@ public class Movement : MonoBehaviour {
         mRgb = GetComponent<Rigidbody>();
         mCalculateJump = false;
     }
+
     void Start()
     {
         transform.rotation.Set(0,0,0,0);
-        
-
     }
 
         void LateUpdate()
     {
-
-
         Vector2 velocityAdd = new Vector2(
         Input.GetAxis("Horizontal"),
         Input.GetAxis("Vertical"));

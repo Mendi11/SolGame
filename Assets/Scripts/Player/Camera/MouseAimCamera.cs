@@ -109,7 +109,7 @@ public class MouseAimCamera : MonoBehaviour
     {
         //Vad kameran följer
         transform.position = mPivot.position;
-        print(mPivot.position);
+        //print(mPivot.position);
     }
 
     void CameraCollision()

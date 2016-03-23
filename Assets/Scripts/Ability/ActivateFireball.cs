@@ -17,6 +17,7 @@ public class ActivateFireball : MonoBehaviour
     {
         if (col.tag == "Player")
         {
+            print("sug kuk");
             mGameC.BallActive = true;
             mLight.SetActive(true);
             Destroy(this.gameObject);
