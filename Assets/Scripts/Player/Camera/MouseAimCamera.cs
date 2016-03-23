@@ -24,13 +24,22 @@ public class MouseAimCamera : MonoBehaviour
     private float mSpeedX = 10f;
     private bool mCloseFar = true;
 
+    private RaycastHit hit;
+    private float detectionRadius = 0.15f;
+    private string[] maskedTags;
+    
+
+
+
 
     void Start()
     {
+       
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").transform;
-        //transform.parent = target.transform;
+     
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
         mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+        //maskedTags[0] = "Player";
     }
 
     void FixedUpdate()
@@ -50,7 +59,7 @@ public class MouseAimCamera : MonoBehaviour
 
         mPlayer.Rotate(Vector3.up, mPosX);
 
-        Debug.Log(diffY);
+        //Debug.Log(diffY);
 
         //Ändar posen på pivoten och roterar spelaren.
         //if (mNewRotationY >= mMinRotationY && mNewRotationY <= mMaxRotationY)
@@ -66,7 +75,7 @@ public class MouseAimCamera : MonoBehaviour
         
 
         // Vart kameran ska kolla
-        this.transform.LookAt(mTarget);
+        transform.LookAt(mTarget);
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -86,12 +95,92 @@ public class MouseAimCamera : MonoBehaviour
             }
 
         }
+
+        ////distance between camFollow and camSpot
+        //float distFromCamSpot = Vector3.Distance(mTarget.position ,mPivot.position);
+        ////distance between camFollow and camera
+        //float distFromCamera = Vector3.Distance(mTarget.position, mPivot.position);
+       // CameraCollision();
+
+
     }
 
     void LateUpdate()
     {
         //Vad kameran följer
-        this.transform.position = mPivot.position;
+        transform.position = mPivot.position;
+        print(mPivot.position);
     }
+
+    void CameraCollision()
+    {
+        //distance between camFollow and camSpot
+        float distFromCamSpot = Vector3.Distance(mPlayer.position,mPivot.position);
+        //distance between camFollow and camera
+        float distFromCamera = Vector3.Distance(mPlayer.position, mPivot.position);
+
+        //ShereCast from camFollow to camSpot
+        if (Physics.SphereCast(mPlayer.position, detectionRadius, mPlayer.forward, out hit, distFromCamSpot))
+        {
+            //**MAKE SURE YOUR PLAYER IS NOT BETWEEN THE FOCUS-POINT AND CAMERA**
+            //get distance betwen camFollow and hitPoint of raycast
+            var distFromHit = Vector3.Distance(mPlayer.position, hit.point);
+            //if camera is behind an object, immediately put it in front
+            if (distFromHit < distFromCamera)
+            {
+                //if player is ver close to a wall, bring camera inward, 
+                //but do not exceed the camFollow's position (dont put camera in front of player)
+                bool maskedHit = false;
+                //check to see if what we hit was tagged
+                
+                    if (hit.transform.tag == "Player")
+                    {
+                        maskedHit = true;
+                    }
+                
+                if (maskedHit == false)
+                {
+                    if (distFromCamera > 1)
+                    {
+                        mPivot.position = hit.point + 1 * -mPlayer.forward;
+                    }
+                    else
+                    {
+                        mPivot.position = mPlayer.position;
+                    }
+                }
+            }
+            else
+            {
+                //if player is ver close to a wall, bring camera inward, 
+                //but do not exceed the camFollow's position (dont put camera in front of player)
+                bool maskedHit = false;
+                //check to see if what we hit was tagged                
+                    if (hit.transform.tag == "Player")
+                    {
+                        maskedHit = true;
+                    }
+                
+                if (maskedHit == false)
+                {
+                    if (distFromCamera > 1)
+                    {
+                        mPivot.position = Vector3.MoveTowards(mPivot.position, hit.point + 1 * -mPlayer.forward, 5 * Time.deltaTime);
+                    }
+                    else
+                    {
+                        mPivot.position = Vector3.MoveTowards( mPlayer.position, mPivot.position, 5 * Time.deltaTime);
+                    }
+                }
+            }
+        }
+        else
+        {
+            //ease camera back to camSpot
+            mPivot.position = Vector3.MoveTowards(mPlayer.position, mPivot.position, 5 * Time.deltaTime);
+            
+        }
+    }
+  
 
 }
