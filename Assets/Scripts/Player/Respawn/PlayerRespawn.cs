@@ -23,6 +23,8 @@ public class PlayerRespawn : MonoBehaviour
     // Sets Player checkpoint to mCurrentCheckpoint position
     public void Respawn()
         {
+            transform.rotation = new Quaternion(0,0,0,0);
+          
             transform.position = RespawnPoint;
         }
 }
