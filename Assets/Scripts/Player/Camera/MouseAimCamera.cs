@@ -10,9 +10,16 @@ public class MouseAimCamera : MonoBehaviour
     private Transform mPlayer;
     //private float mRotateSpeed = 3f;
     private float mPosY = 0;
+    
     private float mPosX = 0;
     [SerializeField]
     private float mSpeedY = 10f;
+    [SerializeField]
+    private float mMinRotationY = -90;
+    [SerializeField]
+    private float mMaxRotationY = 90;
+    private float mNewRotationY = 0;
+    private float mOldRotationY = 0;
     [SerializeField]
     private float mSpeedX = 10f;
     private bool mCloseFar = true;
@@ -33,22 +40,33 @@ public class MouseAimCamera : MonoBehaviour
     }
     void Update()
     {
-
-    }
-    void LateUpdate()
-    {
-
         //Hämtar x och y pos för spelaren och plusas på.
         mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
         mPosX += Input.GetAxis("Mouse X") * Time.deltaTime * mSpeedX;
+        mNewRotationY += mPosY;
+        //mRotationY += mPosY;
+        mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
+        float diffY = mNewRotationY - mOldRotationY;
+
+        mPlayer.Rotate(Vector3.up, mPosX);
+
+        Debug.Log(diffY);
 
         //Ändar posen på pivoten och roterar spelaren.
-        Vector3 move = new Vector3(mTarget.position.x, mPosY, mTarget.position.z);
-        mTarget.position = move;
-        mPlayer.Rotate(Vector3.up, mPosX);
-        // Resetar x rotationen
-        mPosX = 0;
+        //if (mNewRotationY >= mMinRotationY && mNewRotationY <= mMaxRotationY)
+            mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
+        //Vector3 move = new Vector3(mTarget.position.x, mPlayer.position.y + mPosY, mTarget.position.z);
+        //mTarget.position = move;
 
+        // Resetar x rotationen
+        mPosY = 0;
+        mPosX = 0;
+        mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
+        mOldRotationY = mNewRotationY;
+        
+
+        // Vart kameran ska kolla
+        this.transform.LookAt(mTarget);
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -66,17 +84,14 @@ public class MouseAimCamera : MonoBehaviour
                 mPivot.position -= mPlayer.forward * 1.5f;
                 mCloseFar = true;
             }
-            
+
         }
+    }
 
-
-
-        // Vart kameran ska kolla
-        this.transform.LookAt(mTarget);
+    void LateUpdate()
+    {
         //Vad kameran följer
         this.transform.position = mPivot.position;
-
-
     }
 
 }
