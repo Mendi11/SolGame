@@ -50,16 +50,22 @@ public class MouseAimCamera : MonoBehaviour
         mPosX = 0;
 
 
-        if (Input.GetKey(KeyCode.Mouse1) && mCloseFar == true)
-        {         
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            if (mCloseFar == true)
+            {
                 mPivot.position += mPlayer.forward * 1.5f;
-                mCloseFar = false;   
+                mCloseFar = false;
+            }
 
         }
-        else if (mCloseFar == false)
-        {                 
+        else
+        {
+            if (mCloseFar == false)
+            {
                 mPivot.position -= mPlayer.forward * 1.5f;
                 mCloseFar = true;
+            }
             
         }
 

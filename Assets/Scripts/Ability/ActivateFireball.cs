@@ -9,7 +9,7 @@ public class ActivateFireball : MonoBehaviour
     void Start ()
     {
         mGameC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        mLight.SetActive(false);
+        //mLight.SetActive(false);
     }
 	
 
