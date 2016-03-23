@@ -81,14 +81,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Move the character
         transform.Translate(new Vector3(velocityAdd.x, 0f, velocityAdd.y));
-    }
 
-
-    void LateUpdate()
-    {
-
-
-            // The player is able to jump by pressing [Space]
+        // The player is able to jump by pressing [Space]
         if (Input.GetKeyDown(KeyCode.Space) && mGrounded > 0)
         {
             //Hoppar upp med force.
@@ -100,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-            // Switch between fireball colors
+        // Switch between fireball colors
         if (Input.GetKey(KeyCode.Alpha1))
         {
             mFireBallType[0] = true;
@@ -113,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-            // If E is pressed, teleport player to current fireball
+        // If E is pressed, teleport player to current fireball
         if (Input.GetKey(KeyCode.E))
         {
             if (bulletClone == null)
@@ -130,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-            // Activates/deactivates aim overlay by holding Mouse 2
+        // Activates/deactivates aim overlay by holding Mouse 2
         if (Input.GetKey(KeyCode.Mouse1))
         {
 
@@ -142,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
             if (mCanvas == null)
             {
                 return;
-                    }
+            }
             mCanvas.gameObject.SetActive(false);
         }
 
@@ -157,6 +151,14 @@ public class PlayerMovement : MonoBehaviour
                 mAnim.SetLayerWeight(1, 1.0f);
             }
         }
+    }
+
+
+    void LateUpdate()
+    {
+
+
+        
     }
 
 
