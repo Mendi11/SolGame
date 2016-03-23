@@ -2,17 +2,24 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour {
+public class LoadLevel : MonoBehaviour
+{
+    [SerializeField]
+    private string loadLevel;
 
-    public void ClickedStart()
+
+    void OnTriggerEnter(Collider col)
     {
-        StartCoroutine(StartGame());
+        if (col.tag == "Player")
+        {
+            StartCoroutine(StartGame());
+        }
     }
 
     IEnumerator StartGame()
     {
         float mFadeTime = GameObject.Find("GameController").GetComponent<FadeScene>().BeginFade(1);
         yield return new WaitForSeconds(mFadeTime);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(loadLevel);
     }
 }

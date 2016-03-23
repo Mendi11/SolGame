@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BreatheSimple : MonoBehaviour
+public class RockHoover : MonoBehaviour
 {
     Vector3 startPos;
 
@@ -12,7 +12,7 @@ public class BreatheSimple : MonoBehaviour
 
     protected void Update()
     {
-        float distance = Mathf.Sin(Time.timeSinceLevelLoad);
-        transform.position = startPos + Vector3.up * (distance/10) * 0.5f;
+        float distance = Mathf.Cos(Time.timeSinceLevelLoad);
+        transform.position = startPos + Vector3.up * (distance/7) * 1.0f;
     }
 }
