@@ -6,10 +6,17 @@ public class MainMenu : MonoBehaviour {
 
     GameController mGameController;
 
+    void Start()
+    {
+        mGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
+    }
 
     public void ClickedStart()
     {
-        mGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+       
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = (false);
         StartCoroutine(StartGame());
     }
 

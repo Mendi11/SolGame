@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = (true);
 
 
         }
