@@ -10,6 +10,7 @@ public class AbilityCast : MonoBehaviour
     [SerializeField] public Animator mAnim;
     [SerializeField] private float mBallSpeed;
 
+    private Movement mPlayer;
     private Transform mPivot;
     private Transform mTarget;
     private Rigidbody mRgb;
@@ -25,6 +26,8 @@ public class AbilityCast : MonoBehaviour
 
     void Awake()
     {
+
+        mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Movement>();
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<Transform>();
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").GetComponent<Transform>();
         mFireBallSpawn = GameObject.FindGameObjectWithTag("FireBallSpawn").GetComponent<Transform>();
@@ -138,6 +141,7 @@ public class AbilityCast : MonoBehaviour
             if (hit.collider.tag == "Ground" || hit.collider.tag == "Wall" || hit.collider.tag == "Trigger")
             {
                 Bullet(mBallSpeed, hit, mFireball);
+                mPlayer.FireBallReload = false;
             }
         }
 
@@ -177,15 +181,6 @@ public class AbilityCast : MonoBehaviour
         yield return null;
     }
 
-    // Fireball utility
-    //void RestFireBall()
-    //{
-    //    for (int i = 0; i < mFireBallType.Length; i++)
-    //    {
-    //        mFireBallType[i] = false;
-    //    }
-    //}
-
     public bool DestroyFB
     {
         get { return mDestroyFB; }
@@ -197,10 +192,4 @@ public class AbilityCast : MonoBehaviour
         get { return mBallE; }
         set { mBallE = value; }
     }
-
-    //public bool[] FireBallType
-    //{
-    //    get { return mFireBallType; }
-    //    set { mFireBallType = value; }
-    //}
 }

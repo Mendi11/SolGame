@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour {
         public float mGravityMultiplier;
         public float mJumpHeight;                       // Jump height               
 
+        private bool mFireBallReload = false; 
         private bool mCalculateJump;                    // Perform jump in FixedUpdate
         private Rigidbody mRgb;                         // Character body
 
@@ -96,6 +97,7 @@ public class Movement : MonoBehaviour {
         if (col.gameObject.tag == "Ground" || col.gameObject.tag == "Platform")
         {
             mGrounded += 1;
+            mFireBallReload = true;
         }
     }
 
@@ -114,5 +116,13 @@ public class Movement : MonoBehaviour {
         Vector3 extraGravityForce = (Physics.gravity * mGravityMultiplier) - Physics.gravity;
         mRgb.AddForce(extraGravityForce);
     }
+
+    public bool FireBallReload
+    {
+        get { return mFireBallReload;}
+        set { mFireBallReload = value; }
+
+    }
+
 }
 
