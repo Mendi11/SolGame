@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class TriggerPad : MonoBehaviour
 {
     public Light lt;
+    public Light lt2;
+
 
     List<PlattMovement> mPlats;
 
@@ -20,6 +22,11 @@ public class TriggerPad : MonoBehaviour
 
         lt = GetComponent<Light>();
         lt.color = Color.blue;
+
+        lt2 = GameObject.FindGameObjectWithTag("PlatformLight").GetComponent<Light>();
+        lt2.color = Color.blue;
+
+
         mPlats = new List<PlattMovement>();
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
         foreach (GameObject plat in platforms)
@@ -44,6 +51,7 @@ public class TriggerPad : MonoBehaviour
             if (lt.color == Color.blue)
             {
                 lt.color = Color.green;
+                lt2.color = Color.green;
             }
 
 

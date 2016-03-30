@@ -4,6 +4,7 @@ using System.Collections;
 public class Fireball : MonoBehaviour {
 
     AbilityCast mPlayer;
+    private GameObject mCamera;
     float mTime;
 
     // Use this for initialization
@@ -17,6 +18,10 @@ public class Fireball : MonoBehaviour {
 
         mPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<AbilityCast>();
         mTime = 10;
+        mCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        mCamera.GetComponent<MouseAimCamera>().cameraTarget = "CameraTarget2";
+        mCamera.GetComponent<MouseAimCamera>().cameraPivot = "CameraPivot2";
+        mCamera.GetComponent<MouseAimCamera>().cameraObject = "Fireball";
     }
 	
 	// Update is called once per frame
@@ -25,7 +30,11 @@ public class Fireball : MonoBehaviour {
         mTime -= Time.deltaTime;
         if (mPlayer.DestroyFB == true)
         {
-           // mPlayer.DestroyB = false;
+            // mPlayer.DestroyB = false;
+            mCamera.GetComponent<MouseAimCamera>().cameraTarget = "CameraTarget";
+            mCamera.GetComponent<MouseAimCamera>().cameraPivot = "CameraPivot";
+            mCamera.GetComponent<MouseAimCamera>().cameraObject = "Player";
+
             Destroy(gameObject);
             mPlayer.DestroyFB = false;
             
@@ -34,7 +43,9 @@ public class Fireball : MonoBehaviour {
         {
             mPlayer.DestroyB = false;
             Destroy(gameObject);          
-        }                          
+        }
+        
+                                  
 	}
 
     //void OnCollisionEnter()

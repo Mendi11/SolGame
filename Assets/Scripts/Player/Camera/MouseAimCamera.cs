@@ -3,7 +3,9 @@ using System.Collections;
 
 public class MouseAimCamera : MonoBehaviour
 {
-
+    public string cameraTarget;
+    public string cameraPivot;
+    public string cameraObject;
     // Variablar
     private Transform mTarget;
     private Transform mPivot;
@@ -35,10 +37,10 @@ public class MouseAimCamera : MonoBehaviour
     void Start()
     {
        
-        mTarget = GameObject.FindGameObjectWithTag("CameraTarget").transform;
+        mTarget = GameObject.FindGameObjectWithTag(cameraTarget).transform;
      
-        mPivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
-        mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+        mPivot = GameObject.FindGameObjectWithTag(cameraPivot).transform;
+        mPlayer = GameObject.FindGameObjectWithTag(cameraObject).transform;
         //maskedTags[0] = "Player";
     }
 
@@ -49,6 +51,10 @@ public class MouseAimCamera : MonoBehaviour
     }
     void Update()
     {
+        //mTarget = GameObject.FindGameObjectWithTag(cameraTarget).transform;
+
+        //mPivot = GameObject.FindGameObjectWithTag(cameraPivot).transform;
+        //mPlayer = GameObject.FindGameObjectWithTag(cameraObject).transform;
         //Hämtar x och y pos för spelaren och plusas på.
 
         mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
@@ -111,10 +117,6 @@ public class MouseAimCamera : MonoBehaviour
 
     void LateUpdate()
     {
-
-
-       
-
         transform.position = mPivot.position;
         transform.LookAt(mTarget);
 
