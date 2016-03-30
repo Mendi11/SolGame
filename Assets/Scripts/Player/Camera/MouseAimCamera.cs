@@ -50,6 +50,7 @@ public class MouseAimCamera : MonoBehaviour
     void Update()
     {
         //Hämtar x och y pos för spelaren och plusas på.
+
         mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
         mPosX += Input.GetAxis("Mouse X") * Time.deltaTime * mSpeedX;
         mNewRotationY += mPosY;
@@ -63,8 +64,8 @@ public class MouseAimCamera : MonoBehaviour
 
         //Ändar posen på pivoten och roterar spelaren.
         //if (mNewRotationY >= mMinRotationY && mNewRotationY <= mMaxRotationY)
-         mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
-        
+        mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
+
         //Vector3 move = new Vector3(mTarget.position.x, mPlayer.position.y + mPosY, mTarget.position.z);
         //mTarget.position = move;
 
@@ -73,11 +74,11 @@ public class MouseAimCamera : MonoBehaviour
         mPosX = 0;
         mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
         mOldRotationY = mNewRotationY;
-        
-        
+
+
 
         // Vart kameran ska kolla
-        transform.LookAt(mTarget);
+        //
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -94,7 +95,7 @@ public class MouseAimCamera : MonoBehaviour
             {
                 mPivot.position -= mPlayer.forward * 1.5f;
                 mCloseFar = true;
-                mPivot.localPosition = new Vector3(-0.07f, 1.35f, -13f);
+                mPivot.localPosition = new Vector3(-0.07f, 1.35f, -15f);
             }
 
         }
@@ -103,16 +104,20 @@ public class MouseAimCamera : MonoBehaviour
         //float distFromCamSpot = Vector3.Distance(mTarget.position ,mPivot.position);
         ////distance between camFollow and camera
         //float distFromCamera = Vector3.Distance(mTarget.position, mPivot.position);
-       // CameraCollision();
+        // CameraCollision();
 
 
     }
 
     void LateUpdate()
     {
-        
+
+
+       
+
         transform.position = mPivot.position;
-        
+        transform.LookAt(mTarget);
+
     }
 
     
