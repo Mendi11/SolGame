@@ -63,7 +63,8 @@ public class MouseAimCamera : MonoBehaviour
 
         //Ändar posen på pivoten och roterar spelaren.
         //if (mNewRotationY >= mMinRotationY && mNewRotationY <= mMaxRotationY)
-            mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
+         mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
+        
         //Vector3 move = new Vector3(mTarget.position.x, mPlayer.position.y + mPosY, mTarget.position.z);
         //mTarget.position = move;
 
@@ -72,6 +73,7 @@ public class MouseAimCamera : MonoBehaviour
         mPosX = 0;
         mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
         mOldRotationY = mNewRotationY;
+        
         
 
         // Vart kameran ska kolla
@@ -92,6 +94,7 @@ public class MouseAimCamera : MonoBehaviour
             {
                 mPivot.position -= mPlayer.forward * 1.5f;
                 mCloseFar = true;
+                mPivot.localPosition = new Vector3(-0.07f, 1.35f, -13f);
             }
 
         }
@@ -107,80 +110,13 @@ public class MouseAimCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        //Vad kameran följer
+        
         transform.position = mPivot.position;
-        //print(mPivot.position);
+        
     }
 
-    void CameraCollision()
-    {
-        //distance between camFollow and camSpot
-        float distFromCamSpot = Vector3.Distance(mPlayer.position,mPivot.position);
-        //distance between camFollow and camera
-        float distFromCamera = Vector3.Distance(mPlayer.position, mPivot.position);
-
-        //ShereCast from camFollow to camSpot
-        if (Physics.SphereCast(mPlayer.position, detectionRadius, mPlayer.forward, out hit, distFromCamSpot))
-        {
-            //**MAKE SURE YOUR PLAYER IS NOT BETWEEN THE FOCUS-POINT AND CAMERA**
-            //get distance betwen camFollow and hitPoint of raycast
-            var distFromHit = Vector3.Distance(mPlayer.position, hit.point);
-            //if camera is behind an object, immediately put it in front
-            if (distFromHit < distFromCamera)
-            {
-                //if player is ver close to a wall, bring camera inward, 
-                //but do not exceed the camFollow's position (dont put camera in front of player)
-                bool maskedHit = false;
-                //check to see if what we hit was tagged
-                
-                    if (hit.transform.tag == "Player")
-                    {
-                        maskedHit = true;
-                    }
-                
-                if (maskedHit == false)
-                {
-                    if (distFromCamera > 1)
-                    {
-                        mPivot.position = hit.point + 1 * -mPlayer.forward;
-                    }
-                    else
-                    {
-                        mPivot.position = mPlayer.position;
-                    }
-                }
-            }
-            else
-            {
-                //if player is ver close to a wall, bring camera inward, 
-                //but do not exceed the camFollow's position (dont put camera in front of player)
-                bool maskedHit = false;
-                //check to see if what we hit was tagged                
-                    if (hit.transform.tag == "Player")
-                    {
-                        maskedHit = true;
-                    }
-                
-                if (maskedHit == false)
-                {
-                    if (distFromCamera > 1)
-                    {
-                        mPivot.position = Vector3.MoveTowards(mPivot.position, hit.point + 1 * -mPlayer.forward, 5 * Time.deltaTime);
-                    }
-                    else
-                    {
-                        mPivot.position = Vector3.MoveTowards( mPlayer.position, mPivot.position, 5 * Time.deltaTime);
-                    }
-                }
-            }
-        }
-        else
-        {
-            //ease camera back to camSpot
-            mPivot.position = Vector3.MoveTowards(mPlayer.position, mPivot.position, 5 * Time.deltaTime);
-            
-        }
-    }
-  
+    
+    
+    
 
 }

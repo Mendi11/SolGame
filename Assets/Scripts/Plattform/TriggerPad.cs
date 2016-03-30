@@ -11,9 +11,13 @@ public class TriggerPad : MonoBehaviour
     [SerializeField]
     private int mPlatID;
 
+    CameraShake mShake;
+
     // Use this for initialization
     void Start()
     {
+        mShake = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<CameraShake>();
+
         lt = GetComponent<Light>();
         lt.color = Color.blue;
         mPlats = new List<PlattMovement>();
@@ -47,6 +51,8 @@ public class TriggerPad : MonoBehaviour
             {
                 if (a.PlattID == mPlatID && a.PlattOn == false)
                 {
+                    mShake.Timer = 3f;
+                    mShake.ShakCamera = true;
                     a.PlattOn = true;
                 }
             }
