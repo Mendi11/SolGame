@@ -40,6 +40,7 @@ public class PlattMovement : MonoBehaviour {
         mStartPos = mPlattRgb.position;
         mPlattRgb.position += new Vector3(1, 1, 1);
         // Move po
+        
     }
 
     // Update is called once per frame
@@ -55,6 +56,7 @@ public class PlattMovement : MonoBehaviour {
             mMove = new Vector3(mDirSpeedX, mDirSpeedY, mDirSpeedZ);
             mPlattRgb.velocity = mMove;
             mIsMoving = true;
+           // mPlattRgb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
         }
         else if (mOn == false)
         {
@@ -62,6 +64,7 @@ public class PlattMovement : MonoBehaviour {
             mMove = new Vector3(0, 0, 0);
             mPlattRgb.velocity = mMove;
             mIsMoving = false;
+            mPlattRgb.constraints = RigidbodyConstraints.FreezeAll;
 
         }
     }
@@ -133,6 +136,12 @@ public class PlattMovement : MonoBehaviour {
     public bool Loop
     {
         get { return mLoop; }
+
+    }
+    public Rigidbody PlattRgb
+    {
+        get { return mPlattRgb; }
+        set { mPlattRgb = value; }
 
     }
 
