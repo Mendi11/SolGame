@@ -75,7 +75,7 @@ public class MouseAimCamera : MonoBehaviour
         mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
         mOldRotationY = mNewRotationY;
 
-
+        // VI MÅSTE KOMMERNTERA
 
         // Vart kameran ska kolla
         //
