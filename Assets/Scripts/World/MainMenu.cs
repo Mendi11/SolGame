@@ -19,8 +19,13 @@ public class MainMenu : MonoBehaviour {
         Cursor.visible = (false);
         StartCoroutine(StartGame());
     }
+    public void ClickedQuit()
+    {
+        Application.Quit();
 
-    IEnumerator StartGame()
+    }
+
+        IEnumerator StartGame()
     {
 
         mGameController.BallActive = false;

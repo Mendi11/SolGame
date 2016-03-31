@@ -54,6 +54,20 @@ public class TriggerPad : MonoBehaviour
                     mShake.Timer = 3f;
                     mShake.ShakCamera = true;
                     a.PlattOn = true;
+                    if (a.PlattID == 0)
+                    {
+                        a.PlattRgb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
+                    }
+                    if (a.PlattID == 1)
+                    {
+                        a.PlattRgb.constraints &= ~RigidbodyConstraints.FreezePositionX;
+
+                    }
+                    if (a.PlattID == 2 || a.PlattID == 3)
+                    {
+                        a.PlattRgb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+
+                    }
                 }
             }
         }
