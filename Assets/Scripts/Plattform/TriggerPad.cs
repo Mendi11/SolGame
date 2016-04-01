@@ -19,7 +19,8 @@ public class TriggerPad : MonoBehaviour
         mShake = GameObject.FindGameObjectWithTag("CameraPivot").GetComponent<CameraShake>();
 
         lt = GetComponent<Light>();
-        lt.color = Color.blue;
+        lt.color = Color.red;
+
         mPlats = new List<PlattMovement>();
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
         foreach (GameObject plat in platforms)
@@ -41,7 +42,7 @@ public class TriggerPad : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
 
-            if (lt.color == Color.blue)
+            if (lt.color == Color.red)
             {
                 lt.color = Color.green;
             }
