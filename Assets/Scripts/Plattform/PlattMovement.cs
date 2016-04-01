@@ -4,7 +4,9 @@ using System.Collections;
 public class PlattMovement : MonoBehaviour {
 
 
-    private Rigidbody mPlattRgb;
+   
+
+    // In unity you set the speed/direction och set the end postion.
     [SerializeField]
     private float mDirSpeedX = 0;
     [SerializeField]
@@ -24,9 +26,9 @@ public class PlattMovement : MonoBehaviour {
     [SerializeField]
     private bool mLoop = true;
 
+    // Variablar
+    private Rigidbody mPlattRgb;
     private bool mIsMoving = false;
-
-
     Vector3 mMove;
     Vector3 mStartPos;
     private bool mDownUpDir = true;

@@ -8,25 +8,26 @@ public class MouseAimCamera : MonoBehaviour
     private Transform mTarget;
     private Transform mPivot;
     private Transform mPlayer;
-    //private float mRotateSpeed = 3f;
-    private float mPosY = 0;
-    
-    private float mPosX = 0;
+
+
+
     [SerializeField]
     private float mSpeedY = 10f;
     [SerializeField]
     private float mMinRotationY = -90;
     [SerializeField]
     private float mMaxRotationY = 90;
-    private float mNewRotationY = 0;
-    private float mOldRotationY = 0;
     [SerializeField]
     private float mSpeedX = 10f;
+
+    private float mPosY = 0;
+    private float mPosX = 0;
+    private float mNewRotationY = 0;
+    private float mOldRotationY = 0;
     private bool mCloseFar = true;
 
-    private RaycastHit hit;
-    private float detectionRadius = 0.15f;
-    private string[] maskedTags;
+
+
     
 
 
@@ -34,54 +35,42 @@ public class MouseAimCamera : MonoBehaviour
 
     void Start()
     {
-       
+       // Get Tranform from objects.
         mTarget = GameObject.FindGameObjectWithTag("CameraTarget").transform;
-     
         mPivot = GameObject.FindGameObjectWithTag("CameraPivot").transform;
         mPlayer = GameObject.FindGameObjectWithTag("Player").transform;
-        //maskedTags[0] = "Player";
-    }
-
-    void FixedUpdate()
-    {
-
-
     }
     void Update()
     {
         //Hämtar x och y pos för spelaren och plusas på.
-
         mPosY += Input.GetAxis("Mouse Y") * Time.deltaTime * mSpeedY;
         mPosX += Input.GetAxis("Mouse X") * Time.deltaTime * mSpeedX;
         mNewRotationY += mPosY;
-        //mRotationY += mPosY;
+
+
         mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
         float diffY = mNewRotationY - mOldRotationY;
 
+        //Player rotates after the mouseX movement.
         mPlayer.Rotate(Vector3.up, mPosX);
 
-        //Debug.Log(diffY);
-
         //Ändar posen på pivoten och roterar spelaren.
-        //if (mNewRotationY >= mMinRotationY && mNewRotationY <= mMaxRotationY)
+    
         mTarget.RotateAround(mPlayer.position, mPlayer.right, -diffY);
 
-        //Vector3 move = new Vector3(mTarget.position.x, mPlayer.position.y + mPosY, mTarget.position.z);
-        //mTarget.position = move;
 
-        // Resetar x rotationen
+        // Resetar x and y rotationen
         mPosY = 0;
         mPosX = 0;
+
+        // Max and min rotation on Y axis
         mNewRotationY = Mathf.Clamp(mNewRotationY, mMinRotationY, mMaxRotationY);
         mOldRotationY = mNewRotationY;
 
-        // VI MÅSTE KOMMERNTERA
-
-        // Vart kameran ska kolla
-        //
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
+            // Hold mouse1 and the camera will move foward
             if (mCloseFar == true)
             {
                 mPivot.position += mPlayer.forward * 1.5f;
@@ -91,6 +80,7 @@ public class MouseAimCamera : MonoBehaviour
         }
         else
         {
+            // Release mouse1 and the camera will move backwards
             if (mCloseFar == false)
             {
                 mPivot.position -= mPlayer.forward * 1.5f;
@@ -100,11 +90,7 @@ public class MouseAimCamera : MonoBehaviour
 
         }
 
-        ////distance between camFollow and camSpot
-        //float distFromCamSpot = Vector3.Distance(mTarget.position ,mPivot.position);
-        ////distance between camFollow and camera
-        //float distFromCamera = Vector3.Distance(mTarget.position, mPivot.position);
-        // CameraCollision();
+  
 
 
     }
@@ -114,8 +100,10 @@ public class MouseAimCamera : MonoBehaviour
 
 
        
-
+        // Need to be in late to not lag
+        // Sets camera position equal to the pivot.
         transform.position = mPivot.position;
+        // Make the camera to look at Target/Crosshair
         transform.LookAt(mTarget);
 
     }
