@@ -11,6 +11,9 @@ public class FadeScene : MonoBehaviour {
     private float mAlpha = 1.0f;
     private int mFadeDir = -1;
 	
+
+    // Set background and fade values
+
     void OnGUI()
     {
         mAlpha += mFadeDir * mFadeSpeed * Time.deltaTime;
@@ -20,6 +23,9 @@ public class FadeScene : MonoBehaviour {
         GUI.depth = mDrawDepth;
         GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), mFadeOutTexture);
     }
+
+
+
 
     public float BeginFade (int direction)
     {
