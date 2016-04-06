@@ -8,6 +8,9 @@ public class FadeInScene : MonoBehaviour {
         StartCoroutine(StartGame());
     }
 
+
+    // Face in scene from white background
+
     IEnumerator StartGame()
     {
         float mFadeTime = GameObject.Find("GameController").GetComponent<FadeScene>().BeginFade(-1);

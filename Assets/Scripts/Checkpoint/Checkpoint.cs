@@ -5,6 +5,8 @@ public class Checkpoint : MonoBehaviour {
     [SerializeField]
     private Vector3 mCurrentCheckpoint;
     
+    // Set checkpoint
+
     void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Player")

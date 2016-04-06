@@ -5,10 +5,15 @@ public class BreatheSimple : MonoBehaviour
 {
     Vector3 startPos;
 
+    // Set start position
+
     protected void Start()
     {
         startPos = transform.position;
     }
+
+
+    // Hoover simulation, interpolating between 2 values
 
     protected void Update()
     {

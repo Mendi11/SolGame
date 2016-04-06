@@ -10,6 +10,9 @@ public class RockHoover3 : MonoBehaviour
         startPos = transform.position;
     }
 
+
+    // Hoover in air simulation
+
     protected void Update()
     {
         float distance = Mathf.Cos(Time.timeSinceLevelLoad);

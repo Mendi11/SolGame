@@ -16,6 +16,10 @@ public class LoadLevel : MonoBehaviour
         }
     }
 
+
+    // Get fade component and reverse value (fade out)
+    // Load next level
+
     IEnumerator StartGame()
     {
         float mFadeTime = GameObject.Find("GameController").GetComponent<FadeScene>().BeginFade(1);
