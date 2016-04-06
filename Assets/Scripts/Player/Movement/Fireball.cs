@@ -23,9 +23,10 @@ public class Fireball : MonoBehaviour {
 	void Update ()
     {
         mTime -= Time.deltaTime;
+
+        // Check if destroyFireball is true. Then it destoys it. 
         if (mPlayer.DestroyFB == true)
         {
-           // mPlayer.DestroyB = false;
             Destroy(gameObject);
             mPlayer.DestroyFB = false;
             
@@ -36,11 +37,4 @@ public class Fireball : MonoBehaviour {
             Destroy(gameObject);          
         }                          
 	}
-
-    //void OnCollisionEnter()
-    //{
-    //        Destroy(gameObject);
-    //        mPlayer.DestroyFB = false;
-    //        mPlayer.mFinishedCast = true;
-    //}
 }

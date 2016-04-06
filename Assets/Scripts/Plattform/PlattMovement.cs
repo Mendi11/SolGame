@@ -48,7 +48,7 @@ public class PlattMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //Get wich direction it should move.
+        //Get wich direction it should move. Check where the end pos is gonna be. and then move back.
         mDirSpeedX = Platform(mEndPosX, mDirSpeedX, mLeftRightDir, mPlattRgb.position.x, mStartPos.x,"x");
         mDirSpeedY = Platform(mEndPosY, mDirSpeedY, mDownUpDir, mPlattRgb.position.y, mStartPos.y, "y");
         mDirSpeedZ = Platform(mEndPosZ, mDirSpeedZ, mFowardBackDir, mPlattRgb.position.z, mStartPos.z,"z");
@@ -112,6 +112,7 @@ public class PlattMovement : MonoBehaviour {
 
         return speedDir;
     }
+    // Check what dir it should move!
     void Direction(string xyz,bool dir)
         {
         if (xyz == "x")

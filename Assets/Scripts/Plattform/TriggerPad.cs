@@ -20,13 +20,13 @@ public class TriggerPad : MonoBehaviour
 
         lt = GetComponent<Light>();
         lt.color = Color.red;
-
+        // Load all platfrom on the level and save it in a list.
         mPlats = new List<PlattMovement>();
         GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
         foreach (GameObject plat in platforms)
         {
             mPlats.Add(plat.GetComponent<PlattMovement>());
-            print("1");
+           
         }
     }
 
@@ -47,9 +47,11 @@ public class TriggerPad : MonoBehaviour
                 lt.color = Color.green;
             }
 
-
             foreach (PlattMovement a in mPlats)
             {
+
+                // if the trigger match the id of any in the list it trigger and changes light from red to green.
+                // And unfrezzes the position that it is equal too.
                 if (a.PlattID == mPlatID && a.PlattOn == false)
                 {
                     mShake.Timer = 3f;

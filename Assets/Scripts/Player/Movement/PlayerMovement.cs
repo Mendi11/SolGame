@@ -145,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && !mIsCasting)
             {
-
+                // Animation start
                 StartCasting();
                 mAnim.SetTrigger("isCast");
                 mAnim.SetLayerWeight(1, 1.0f);

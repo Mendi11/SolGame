@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
     {
         mGameC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
-        // Så den gameobjectet förstörs inte.
+        // GameObject do not destroy.
         if (mInstance == null)
         {
             mInstance = this;
@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
         else
             DestroyObject(gameObject);
 
-        // Så den gameobjectet förstörs inte.
+        // GameObject do not destroy.
         DontDestroyOnLoad(gameObject);
     }
 

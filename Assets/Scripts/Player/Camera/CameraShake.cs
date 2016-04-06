@@ -4,7 +4,11 @@ using System.Collections;
 public class CameraShake : MonoBehaviour
 {
 
-    
+    /// <summary>
+    ///  Shake THE FUCKING CAMERA
+    /// </summary>
+
+
     Transform mPivot;
 
     bool mResetPos = false;
